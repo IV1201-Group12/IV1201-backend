@@ -5,9 +5,10 @@ const app = express();
 app.use(cors());
 
 app.get('/', (req, res) => {
-  return res.send('hello1');
+  return res.send('helloo');
 });
 
 app.use('/things', require('./routes/thingRoute'));
+app.use('/applications', require('./routes/applicationRoute'));
 
 module.exports = app;
