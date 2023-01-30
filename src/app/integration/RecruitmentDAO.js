@@ -1,10 +1,12 @@
 const { generateHashSync } = require('../utils/bcrypt');
 const { Sequelize } = require('sequelize');
+//temp
 
 const users = [
-  { username: 'edvin', password: generateHashSync('pass') },
-  { username: 'edvin2', password: generateHashSync('pass2') },
+  { username: 'edvin', password: generateHashSync('pass'), role: 'user' },
+  { username: 'edvin2', password: generateHashSync('pass2'), role: 'admin' },
 ];
+//
 
 const sequelize = new Sequelize(
   'recruitment_application',
