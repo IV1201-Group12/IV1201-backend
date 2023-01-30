@@ -10,8 +10,8 @@ const users = [
 
 const sequelize = new Sequelize(
   'recruitment_application',
-  'postgres',
-  'postgres',
+  process.env.DATABASE_USERNAME,
+  process.env.DATABASE_PASSWORD,
   {
     host: 'localhost',
     dialect: 'postgres',
