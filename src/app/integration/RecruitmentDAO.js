@@ -8,8 +8,8 @@ const users = [
 
 const sequelize = new Sequelize(
   'recruitment_application',
-  'postgres',
-  'postgres',
+  process.env.DATABASE_USERNAME,
+  process.env.DATABASE_PASSWORD,
   {
     host: 'localhost',
     dialect: 'postgres',
@@ -35,6 +35,6 @@ module.exports = {
   },
 
   createApplicant: async (applicant) => {
-    queryInterface.bulkInsert('person', [applicant]);
+    await queryInterface.bulkInsert('person', [applicant]);
   },
 };
