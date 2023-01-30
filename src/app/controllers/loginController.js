@@ -1,11 +1,11 @@
-const userDAO = require('../integration/userDAO');
+const RecruitmentDAO = require('../integration/RecruitmentDAO');
 const { comparePassword } = require('../utils/bcrypt');
 const { generateToken } = require('../utils/jwt');
 
 module.exports = {
   login: async (req, res) => {
     const { username, password } = req.body;
-    const existingUser = userDAO.getExistingUser(username);
+    const existingUser = RecruitmentDAO.getExistingUser(username);
     if (!existingUser) {
       //todo
       res.status(401).send("error - doesn't exist");
