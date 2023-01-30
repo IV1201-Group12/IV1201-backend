@@ -16,6 +16,13 @@ module.exports = {
       return res.status(401).send('error - wrong pass');
     }
     const token = generateToken(existingUser);
-    res.send({ token });
+    return res
+      .cookie('ACCESSTOKEN', token, {
+        httpOnly: true,
+        //Secure? om production
+      })
+      .status(200)
+      .json('logged in');
+    // res.send({ token });
   },
 };
