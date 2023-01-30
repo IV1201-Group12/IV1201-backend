@@ -37,6 +37,6 @@ module.exports = {
   },
 
   createApplicant: async (applicant) => {
-    queryInterface.bulkInsert('person', [applicant]);
+    await queryInterface.bulkInsert('person', [applicant]);
   },
 };
