@@ -1,7 +1,7 @@
 const applicationController = require('../controllers/applicationController');
 const express = require('express');
-const router = express.Router();
+const Router = express.Router();
 
-router.get('/', applicationController.getAllApplications);
+Router.get('/', applicationController.getAllApplications);
 
-module.exports = router;
+module.exports = Router;
