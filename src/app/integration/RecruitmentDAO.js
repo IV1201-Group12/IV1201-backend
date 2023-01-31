@@ -1,5 +1,6 @@
 const { generateHashSync } = require('../utils/bcrypt');
-const { Sequelize } = require('sequelize');
+const dbConfig = require('../config/db-config');
+const { Sequelize, DataTypes } = require('sequelize');
 //temp
 
 const users = [
@@ -9,19 +10,23 @@ const users = [
 //
 
 const sequelize = new Sequelize(
-  'recruitment_application',
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
+  dbConfig.NAME,
+  dbConfig.USERNAME,
+  dbConfig.PASSWORD,
   {
-    host: 'localhost',
-    dialect: 'postgres',
+    host: dbConfig.HOST,
+    port: dbConfig.PORT,
+    dialect: dbConfig.DIALECT,
   },
 );
 
-sequelize.sync();
+const models = {
+  Application: require('../models/application')(sequelize, DataTypes),
+};
 
 (async () => {
   try {
+    await sequelize.sync();
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {
@@ -38,5 +43,9 @@ module.exports = {
 
   createApplicant: async (applicant) => {
     await queryInterface.bulkInsert('person', [applicant]);
+  },
+
+  findAllApplications: async () => {
+    return await models.Application.findAll();
   },
 };

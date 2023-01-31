@@ -1,9 +1,9 @@
-const applicationDAO = require('../integration/applicationDAO.js');
+const db = require('../integration/RecruitmentDAO');
 
 module.exports = {
-  getAllApplications: (req, res) => {
+  getAllApplications: async (req, res) => {
     try {
-      const applications = applicationDAO.getAllApplications();
+      const applications = await db.findAllApplications();
       res.json(applications);
     } catch (err) {
       res.status(500).send(err);
