@@ -12,7 +12,6 @@ app.get('/', (req, res) => {
   return res.send('helloo');
 });
 
-app.use('/things', require('./routes/thingRoute'));
 app.use('/login', require('./routes/loginRoute'));
 app.use('/applications', require('./routes/applicationRoute'));
 app.use('/createAccount', require('./routes/createAccountRoute'));
