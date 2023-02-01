@@ -42,6 +42,7 @@ module.exports = {
   },
 
   createApplicant: async (applicant) => {
+    applicant.password = generateHashSync(applicant.password);
     await queryInterface.bulkInsert('person', [applicant]);
   },
 
