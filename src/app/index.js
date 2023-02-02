@@ -12,8 +12,7 @@ app.get('/', (req, res) => {
   return res.send('helloo');
 });
 
-app.use('/login', require('./routes/loginRoute'));
+app.use('/auth', require('./routes/authRoute'));
 app.use('/applications', require('./routes/applicationRoute'));
-app.use('/createAccount', require('./routes/createAccountRoute'));
 
 module.exports = app;
