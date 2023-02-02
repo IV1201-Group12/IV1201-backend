@@ -1,4 +1,4 @@
-const RecruitmentDAO = require('../integration/RecruitmentDAO');
+const applicantRepository = require('../repositories/applicantRepository');
 const Validators = require('../utils/validators');
 const { comparePassword } = require('../utils/bcrypt');
 const { generateToken } = require('../utils/jwt');
@@ -14,7 +14,7 @@ module.exports = {
         throw new Error('Email is not valid');
       else if (!Validators.isValidPnr(req.body.pnr))
         throw new Error('Person number is not valid');
-      await RecruitmentDAO.createApplicant(req.body);
+      await applicantRepository.createApplicant(req.body);
       res.status(201).send();
     } catch (err) {
       throw new Error(err.message);
@@ -22,7 +22,7 @@ module.exports = {
   },
   login: async (req, res) => {
     const { username, password } = req.body;
-    const existingUser = RecruitmentDAO.getExistingUser(username);
+    const existingUser = applicantRepository.getExistingUser(username);
     if (!existingUser) {
       //todo
       res.status(401).send("error - doesn't exist");
