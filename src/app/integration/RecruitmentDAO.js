@@ -22,7 +22,7 @@ const Applicant = defineApplicantModel(sequelize, DataTypes);
 const Recruiter = defineRecruiterModel(sequelize, DataTypes);
 
 // Define relationships
-Applicant.hasOne(Application);
+Applicant.hasMany(Application);
 Application.belongsTo(Applicant);
 
 // Define exportable
