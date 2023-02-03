@@ -1,7 +1,7 @@
 const db = require('../integration/RecruitmentDAO');
 const { generateHashSync } = require('../utils/bcrypt');
 
-const Applicant = db.models.Applicant;
+const User = db.models.User;
 
 // Testing data
 const users = [
@@ -14,7 +14,7 @@ module.exports = {
   // TODO: implement with model functions
   createApplicant: async (applicant) => {
     applicant.password = generateHashSync(applicant.password);
-    await Applicant.create({ firstname: 'test' });
+    await User.create({ firstname: 'test' });
   },
   // TODO: implement with model functions
   getExistingUser: (username) => {
