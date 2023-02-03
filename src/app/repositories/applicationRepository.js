@@ -1,10 +1,10 @@
 const db = require('../integration/RecruitmentDAO');
 
 const Application = db.models.Application;
+const Applicant = db.models.Applicant;
 
 module.exports = {
-  //TODO: insert applicant model in response
   findAllApplications: async () => {
-    return await Application.findAll();
+    return await Application.findAll({ include: Applicant });
   },
 };
