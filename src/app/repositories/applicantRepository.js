@@ -9,7 +9,7 @@ const users = [
   { username: 'edvin2', password: generateHashSync('pass2'), role: 'admin' },
 ];
 
-// TODO: maybe scrap the applicant and recruiter models and use a user model instead+
+// TODO: maybe scrap the applicant and recruiter models and use a user model instead
 module.exports = {
   // TODO: implement with model functions
   createApplicant: async (applicant) => {
