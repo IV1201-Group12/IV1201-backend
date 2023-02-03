@@ -1,14 +1,10 @@
-const { generateHashSync } = require('../utils/bcrypt');
 const dbConfig = require('../config/db-config');
 const { Sequelize, DataTypes } = require('sequelize');
-//temp
+const defineApplicationModel = require('../models/application');
+const defineApplicantModel = require('../models/applicant');
+const defineRecruiterModel = require('../models/recruiter');
 
-const users = [
-  { username: 'edvin', password: generateHashSync('pass'), role: 'user' },
-  { username: 'edvin2', password: generateHashSync('pass2'), role: 'admin' },
-];
-//
-
+// Instantiate Sequelize object with db configuration
 const sequelize = new Sequelize(
   dbConfig.NAME,
   dbConfig.USERNAME,
@@ -20,10 +16,26 @@ const sequelize = new Sequelize(
   },
 );
 
-const models = {
-  Application: require('../models/application')(sequelize, DataTypes),
+// Define models
+const Application = defineApplicationModel(sequelize, DataTypes);
+const Applicant = defineApplicantModel(sequelize, DataTypes);
+const Recruiter = defineRecruiterModel(sequelize, DataTypes);
+
+// Define relationships
+Applicant.hasOne(Application);
+Application.belongsTo(Applicant);
+
+// Define exportable
+const db = {
+  sequelize: sequelize,
+  models: {
+    Application: Application,
+    Applicant: Applicant,
+    Recruiter: Recruiter,
+  },
 };
 
+// Start db connection
 (async () => {
   try {
     await sequelize.sync();
@@ -34,19 +46,4 @@ const models = {
   }
 })();
 
-const queryInterface = sequelize.getQueryInterface();
-
-module.exports = {
-  getExistingUser: (username) => {
-    return users.find((user) => user.username === username);
-  },
-
-  createApplicant: async (applicant) => {
-    applicant.password = generateHashSync(applicant.password);
-    await queryInterface.bulkInsert('person', [applicant]);
-  },
-
-  findAllApplications: async () => {
-    return await models.Application.findAll();
-  },
-};
+module.exports = db;
