@@ -35,11 +35,14 @@ module.exports = {
     const token = generateToken(existingUser);
     return res
       .cookie('ACCESSTOKEN', token, {
-        httpOnly: true,
+        // httpOnly: true,
         //Secure? om production
       })
       .status(200)
       .json({ username: existingUser.username });
     // res.send({ token });
+  },
+  testThing: (req, res) => {
+    res.status(200).send('Hejk');
   },
 };

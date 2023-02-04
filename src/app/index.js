@@ -6,7 +6,14 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+
+const corsOptions = {
+  origin: 'http://127.0.0.1:5173',
+  credentials: true,
+  exposedHeaders: ['set-cookie'],
+};
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
   return res.send('helloo');
