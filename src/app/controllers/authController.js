@@ -25,7 +25,7 @@ module.exports = {
     const existingUser = userRepository.getExistingUser(username);
     if (!existingUser) {
       //todo
-      res.status(401).send("error - doesn't exist");
+      return res.status(401).send("error - doesn't exist");
     }
     const validPass = await comparePassword(password, existingUser.password);
     if (!validPass) {
@@ -39,7 +39,7 @@ module.exports = {
         //Secure? om production
       })
       .status(200)
-      .json('logged in');
+      .json({ username: existingUser.username });
     // res.send({ token });
   },
 };
