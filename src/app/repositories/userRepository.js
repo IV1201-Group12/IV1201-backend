@@ -14,7 +14,7 @@ module.exports = {
   // TODO: implement with model functions
   createApplicant: async (applicant) => {
     applicant.password = generateHashSync(applicant.password);
-    await User.create({ firstname: 'test' });
+    await User.create(applicant);
   },
   // TODO: implement with model functions
   getExistingUser: (username) => {
