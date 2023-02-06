@@ -36,10 +36,18 @@ module.exports = {
     return res
       .cookie('ACCESSTOKEN', token, {
         httpOnly: true,
-        sameSite: 'none',
+        sameSite: 'Strict',
+        maxAge: 60 * 60 * 1000, //1h
       })
       .status(200)
       .json({ username: existingUser.username });
-    // res.send({ token });
+  },
+  logout: async (req, res) => {
+    res.cookie('ACCESSTOKEN', 'none', {
+      maxAge: 5 * 1000, //5s
+      httpOnly: true,
+      sameSite: 'Strict',
+    });
+    res.status(200).json({ message: 'Logged out' });
   },
 };
