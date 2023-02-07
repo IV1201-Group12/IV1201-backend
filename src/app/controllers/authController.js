@@ -14,6 +14,7 @@ module.exports = {
         throw new Error('Email is not valid');
       else if (!Validators.isValidPnr(req.body.pnr))
         throw new Error('Person number is not valid');
+      req.body.role = 'applicant';
       await userRepository.createApplicant(req.body);
       res.status(201).send();
     } catch (err) {
