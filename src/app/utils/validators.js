@@ -4,14 +4,9 @@ module.exports = {
   },
 
   isValidPnr(value) {
-    return true;
-    let pnrToString;
-    if (Number.isInteger(value)) {
-      pnrToString = value.toString();
-    } else {
-      return false;
-    }
-    if (pnrToString.length === 12) return true;
+    if (Number.isNaN(value)) return false;
+
+    if (value.length === 12) return true;
     else return false;
   },
 
