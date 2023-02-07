@@ -15,11 +15,12 @@ module.exports = {
         !Validators.isString(req.body.lastname) ||
         req.body.lastname.length < 1
       )
-        throw new Error('Surname is not valid');
+          throw new Error('Surname is not valid');
       else if (!Validators.isValidEmail(req.body.email))
-        throw new Error('Email is not valid');
+         throw new Error('Email is not valid');
       else if (!Validators.isValidPnr(req.body.pnr))
         throw new Error('Person number is not valid');
+      req.body.role = 'applicant';
       await userRepository.createApplicant(req.body);
       res.status(201).send();
     } catch (err) {
@@ -28,7 +29,7 @@ module.exports = {
   },
   login: async (req, res) => {
     const { username, password } = req.body;
-    const existingUser = userRepository.getExistingUser(username);
+    const existingUser = await userRepository.getExistingUser(username);
     if (!existingUser) {
       //todo
       return res.status(401).send("error - doesn't exist");
@@ -42,10 +43,18 @@ module.exports = {
     return res
       .cookie('ACCESSTOKEN', token, {
         httpOnly: true,
-        sameSite: 'none',
+        sameSite: 'Strict',
+        maxAge: 60 * 60 * 1000, //1h
       })
       .status(200)
       .json({ username: existingUser.username });
-    // res.send({ token });
+  },
+  logout: async (req, res) => {
+    res.cookie('ACCESSTOKEN', 'none', {
+      maxAge: 5 * 1000, //5s
+      httpOnly: true,
+      sameSite: 'Strict',
+    });
+    res.status(200).json({ message: 'Logged out' });
   },
 };
