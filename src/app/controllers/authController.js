@@ -6,9 +6,9 @@ const { generateToken } = require('../utils/jwt');
 module.exports = {
   createApplicant: async (req, res, next) => {
     try {
-      if (!Validators.isString(req.body.name))
+      if (!Validators.isString(req.body.firstname))
         throw new Error('Name is not valid');
-      else if (!Validators.isString(req.body.surname))
+      else if (!Validators.isString(req.body.lastname))
         throw new Error('Surname is not valid');
       else if (!Validators.isValidEmail(req.body.email))
         throw new Error('Email is not valid');
@@ -22,7 +22,7 @@ module.exports = {
   },
   login: async (req, res) => {
     const { username, password } = req.body;
-    const existingUser = userRepository.getExistingUser(username);
+    const existingUser = await userRepository.getExistingUser(username);
     if (!existingUser) {
       //todo
       return res.status(401).send("error - doesn't exist");
