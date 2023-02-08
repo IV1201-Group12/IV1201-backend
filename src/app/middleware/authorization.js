@@ -13,9 +13,8 @@ module.exports = {
       req.username = tokenData.username;
       req.role = tokenData.role;
       return next();
-    } catch {
-      //todo
-      return res.status(403).send('Bad token');
+    } catch (err) {
+      return res.status(403).send(err);
     }
   },
 };
