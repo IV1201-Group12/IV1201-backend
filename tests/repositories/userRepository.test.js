@@ -15,10 +15,10 @@ afterEach(async () => {
 
 const connectToDatabase = async () => {
   return pg_promise({
-    host: process.env.DATABASE_HOST,
-    database: process.env.DATABASE_NAME,
-    user: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
+    host: dbConfig.HOST,
+    database: dbConfig.NAME,
+    user: dbConfig.USERNAME,
+    password: dbConfig.PASSWORD,
   });
 };
 

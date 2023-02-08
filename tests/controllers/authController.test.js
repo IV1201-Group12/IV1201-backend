@@ -1,4 +1,5 @@
-const createAccountController = require('../../src/app/controllers/authController');
+const authController = require('../../src/app/controllers/authController');
+const dbConfig = require('../../src/app/config/db-config');
 
 const pg_promise = require('pg-promise')();
 
@@ -14,10 +15,10 @@ let database;
 
 const connectToDatabase = async () => {
   return pg_promise({
-    host: process.env.DATABASE_HOST,
-    database: process.env.DATABASE_NAME,
-    user: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
+    host: dbConfig.HOST,
+    database: dbConfig.NAME,
+    user: dbConfig.USERNAME,
+    password: dbConfig.PASSWORD,
   });
 };
 
@@ -72,21 +73,17 @@ describe('tests for createApplicant', () => {
     },
   };
   test('A new account is created successfully', async () => {
-    await createAccountController.createApplicant(reqCorrect, res, null);
+    await authController.createApplicant(reqCorrect, res, null);
     expect(res.statusCode).toEqual(201);
   });
 
   test('An error is thrown if person number is invalid', async () => {
-    await createAccountController.createApplicant(
-      reqPnrNumberInvalid,
-      res,
-      null,
-    );
+    await authController.createApplicant(reqPnrNumberInvalid, res, null);
     expect(res.message).toEqual('Person number is not valid');
   });
 
   test('An error is thrown if email is invalid', async () => {
-    await createAccountController.createApplicant(reqEmailInvalid, res, null);
+    await authController.createApplicant(reqEmailInvalid, res, null);
     expect(res.message).toEqual('Email is not valid');
   });
 });
