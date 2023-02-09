@@ -4,7 +4,7 @@ const { comparePassword } = require('../utils/bcrypt');
 const { generateToken } = require('../utils/jwt');
 
 module.exports = {
-  createApplicant: async (req, res, next) => {
+  createApplicant: async (req, res) => {
     try {
       if (
         !Validators.isString(req.body.firstname) ||
