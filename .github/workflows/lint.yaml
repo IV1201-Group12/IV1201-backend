@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [test/no-ref/playwright-testing]
+    branches: [feat/no-ref/eslint-github-action]
   pull_request:
-    branches: [test/no-ref/playwright-testing]
+    branches: [feat/no-ref/eslint-github-action]
 jobs:
   build:
     runs-on: ubuntu-latest
