@@ -15,9 +15,9 @@ module.exports = {
         !Validators.isString(req.body.lastname) ||
         req.body.lastname.length < 1
       )
-          throw new Error('Surname is not valid');
+        throw new Error('Surname is not valid');
       else if (!Validators.isValidEmail(req.body.email))
-         throw new Error('Email is not valid');
+        throw new Error('Email is not valid');
       else if (!Validators.isValidPnr(req.body.pnr))
         throw new Error('Person number is not valid');
       req.body.role = 'applicant';
