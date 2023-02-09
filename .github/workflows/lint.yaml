@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [feat/no-ref/eslint-github-action]
+    branches: [development]
   pull_request:
-    branches: [feat/no-ref/eslint-github-action]
+    branches: [development]
 jobs:
   build:
     runs-on: ubuntu-latest
