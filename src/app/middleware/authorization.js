@@ -15,9 +15,9 @@ module.exports = {
         req.role = tokenData.role;
         if (!role.includes(req.role)) return res.status(403).send('Wrong role');
         return next();
-      } catch {
+      } catch (err) {
         //todo
-        return res.status(403).send('Bad token');
+        return res.status(403).send(err);
       }
     };
   },
