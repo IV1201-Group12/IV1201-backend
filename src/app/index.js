@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.use('/auth', require('./routes/authRoute'));
 app.use(
   '/applications',
-  authorizeRequest,
+  authorizeRequest(['recruiter']),
   require('./routes/applicationRoute'),
 );
 
