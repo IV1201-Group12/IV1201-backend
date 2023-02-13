@@ -18,7 +18,7 @@ jobs:
 
   test:
     env:
-      DATABASE_HOST: postgres
+      DATABASE_HOST: localhost
       DATABASE_PORT: 5432
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
@@ -39,6 +39,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
 
     steps:
       - name: Checkout Code From the Repository
