@@ -6,4 +6,8 @@ module.exports = {
   findAllApplications: async () => {
     return await Application.findAll({ include: 'applicant' });
   },
+
+  findApplicationById: async (id) => {
+    console.log(id)
+  },
 };
