@@ -9,4 +9,14 @@ module.exports = {
       res.status(500).send(err);
     }
   },
+
+  getApplication: async (req, res) => {
+    try {
+      const application = await applicationRepository.findApplicationById(
+        req.params.id,
+      );
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
 };
