@@ -12,9 +12,10 @@ module.exports = {
 
   getApplication: async (req, res) => {
     try {
-      const application = await applicationRepository.findApplicationById(
+      /*const application = await applicationRepository.findApplicationById(
         req.params.id,
       );
+      */
     } catch (err) {
       res.status(500).send(err);
     }
