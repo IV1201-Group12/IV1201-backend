@@ -4,6 +4,7 @@ module.exports = {
   },
 
   isValidPnr(value) {
+    if (!value) return false;
     if (Number.isNaN(value)) return false;
 
     if (value.length === 12) return true;
@@ -11,6 +12,7 @@ module.exports = {
   },
 
   isValidEmail(value) {
+    if (!value) return false;
     const regex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 

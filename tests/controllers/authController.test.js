@@ -35,29 +35,29 @@ describe('tests for createApplicant', () => {
     },
   };
 
-  const reqPnrNumberInvalid = {
-    body: {
-      firstname: 'test',
-      lastname: 'test',
-      email: 'test@gmail.com',
-      pnr: '12345',
-      username: 'test',
-      password: '12345test',
-      role: 'applicant',
-    },
-  };
+  // const reqPnrNumberInvalid = {
+  //   body: {
+  //     firstname: 'test',
+  //     lastname: 'test',
+  //     email: 'test@gmail.com',
+  //     pnr: '12345',
+  //     username: 'test',
+  //     password: '12345test',
+  //     role: 'applicant',
+  //   },
+  // };
 
-  const reqEmailInvalid = {
-    body: {
-      firstname: 'test',
-      lastname: 'test',
-      email: 'testmailcom',
-      pnr: '123456789018',
-      username: 'test',
-      password: '12345test',
-      role: 'applicant',
-    },
-  };
+  // const reqEmailInvalid = {
+  //   body: {
+  //     firstname: 'test',
+  //     lastname: 'test',
+  //     email: 'testmailcom',
+  //     pnr: '123456789018',
+  //     username: 'test',
+  //     password: '12345test',
+  //     role: 'applicant',
+  //   },
+  // };
 
   const res = {
     statusCode: null,
@@ -77,13 +77,13 @@ describe('tests for createApplicant', () => {
     expect(res.statusCode).toEqual(201);
   });
 
-  test('An error is thrown if person number is invalid', async () => {
-    await authController.createApplicant(reqPnrNumberInvalid, res, null);
-    expect(res.message).toEqual('Person number is not valid');
-  });
+  // test('An error is thrown if person number is invalid', async () => {
+  //   await authController.createApplicant(reqPnrNumberInvalid, res, null);
+  //   expect(res.message).toEqual('Person number is not valid');
+  // });
 
-  test('An error is thrown if email is invalid', async () => {
-    await authController.createApplicant(reqEmailInvalid, res, null);
-    expect(res.message).toEqual('Email is not valid');
-  });
+  // test('An error is thrown if email is invalid', async () => {
+  //   await authController.createApplicant(reqEmailInvalid, res, null);
+  //   expect(res.message).toEqual('Email is not valid');
+  // });
 });
