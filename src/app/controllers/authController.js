@@ -1,11 +1,20 @@
 const userRepository = require('../repositories/userRepository');
 const { comparePassword } = require('../utils/bcrypt');
 const { generateToken } = require('../utils/jwt');
+const { ValidationError } = require('sequelize');
 
 module.exports = {
   createApplicant: async (req, res) => {
     req.body.role = 'applicant';
-    await userRepository.createApplicant(req.body);
+    try {
+      await userRepository.createApplicant(req.body);
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        res.status(409).send(err.errors[0].message);
+      } else {
+        res.status(400).send('Server error');
+      }
+    }
     res.status(201).send();
   },
   login: async (req, res) => {

@@ -19,13 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       pnr: {
         type: DataTypes.TEXT,
         validate: {
-          isValidPnr(value) {
-            if (Number.isNaN(value))
-              throw new Error('Person number is not valid.');
+          // isValidPnr(value) {
+          //   if (Number.isNaN(value))
+          //     throw new Error('Person number is not valid.');
 
-            if (value.length !== 12)
-              throw new Error('Person number is not valid.');
-          },
+          //   if (value.length !== 12)
+          //     throw new Error('Person number is not valid.');
+          isNumeric: true,
+          len: [12],
         },
       },
       username: {
