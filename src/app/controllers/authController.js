@@ -5,7 +5,7 @@ const { generateToken } = require('../utils/jwt');
 module.exports = {
   createApplicant: async (req, res) => {
     req.body.role = 'applicant';
-    await userRepository.createApplicant(req.body);
+    // await userRepository.createApplicant(req.body);
     res.status(201).send();
   },
   login: async (req, res) => {
