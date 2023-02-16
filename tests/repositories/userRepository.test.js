@@ -35,11 +35,20 @@ describe('tests for createApplicant', () => {
     role: 'applicant',
   };
 
-  const applicantPnrNumberInvalid = {
+  const applicantPnrNumberWrongLength = {
     firstname: 'test',
     lastname: 'test',
     email: 'test@gmail.com',
     pnr: '123456',
+    username: 'test11',
+    password: '12345test',
+    role: 'applicant',
+  };
+  const applicantPnrNumberNotNumeric = {
+    firstname: 'test',
+    lastname: 'test',
+    email: 'test@gmail.com',
+    pnr: 'abcabcabcabc',
     username: 'test11',
     password: '12345test',
     role: 'applicant',
@@ -61,17 +70,26 @@ describe('tests for createApplicant', () => {
     }).not.toThrow();
   });
 
-  test('An error is thrown if person number is invalid', async () => {
+  test('An error is thrown if person number is not numeric', async () => {
     try {
-      await userRepository.createApplicant(applicantPnrNumberInvalid);
+      await userRepository.createApplicant(applicantPnrNumberNotNumeric);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
-        'Validation error: Person number is not valid.',
+        'Validation error: Validation isNumeric on pnr failed',
       );
     }
   });
-
+  test('An error is thrown if person number is of the wrong length', async () => {
+    try {
+      await userRepository.createApplicant(applicantPnrNumberWrongLength);
+      fail('An error was not thrown.');
+    } catch (err) {
+      expect(err.message).toEqual(
+        'Validation error: Validation len on pnr failed',
+      );
+    }
+  });
   test('An error is thrown if email is invalid', async () => {
     try {
       await userRepository.createApplicant(applicantEmailInvalid);
