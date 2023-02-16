@@ -75,7 +75,7 @@ describe('tests for createApplicant', () => {
     },
   };
   test('A new account is created successfully', async () => {
-    await authController.createApplicant(reqCorrect, res, null);
+    await authController.register(reqCorrect, res, null);
     expect(res.statusCode).toEqual(201);
   });
 
