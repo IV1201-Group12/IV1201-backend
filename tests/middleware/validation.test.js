@@ -1,9 +1,9 @@
 const {
-  validateCreateApplicant,
+  validateRegister,
   validateLogin,
 } = require('../../src/app/middleware/validation');
 
-describe('tests for validateCreateApplicant', () => {
+describe('tests for validateRegister', () => {
   const reqValid = {
     body: {
       firstname: 'test',
@@ -96,42 +96,42 @@ describe('tests for validateCreateApplicant', () => {
   const next = jest.fn();
 
   test('Next is called if the request is valid', () => {
-    validateCreateApplicant(reqValid, res, next);
+    validateRegister(reqValid, res, next);
     expect(next).toHaveBeenCalled();
   });
 
   test('An error is thrown if person number is invalid', () => {
-    validateCreateApplicant(reqPnrNumberInvalid, res, null);
+    validateRegister(reqPnrNumberInvalid, res, null);
     expect(res.message).toEqual('Person number is not valid');
     expect(res.statusCode).toEqual(400);
   });
 
   test('An error is thrown if email is invalid', () => {
-    validateCreateApplicant(reqEmailInvalid, res, null);
+    validateRegister(reqEmailInvalid, res, null);
     expect(res.message).toEqual('Email is not valid');
     expect(res.statusCode).toEqual(400);
   });
 
   test('An error is thrown if first name is invalid', () => {
-    validateCreateApplicant(reqFirstnameInvalid, res, null);
+    validateRegister(reqFirstnameInvalid, res, null);
     expect(res.message).toEqual('Name is not valid');
     expect(res.statusCode).toEqual(400);
   });
 
   test('An error is thrown if last name is invalid', () => {
-    validateCreateApplicant(reqLastnameInvalid, res, null);
+    validateRegister(reqLastnameInvalid, res, null);
     expect(res.message).toEqual('Surname is not valid');
     expect(res.statusCode).toEqual(400);
   });
 
   test('An error is thrown if password is invalid', () => {
-    validateCreateApplicant(reqPasswordInvalid, res, null);
+    validateRegister(reqPasswordInvalid, res, null);
     expect(res.message).toEqual('Password is not valid');
     expect(res.statusCode).toEqual(400);
   });
 
   test('An error is thrown if username is invalid', () => {
-    validateCreateApplicant(reqUsernameInvalid, res, null);
+    validateRegister(reqUsernameInvalid, res, null);
     expect(res.message).toEqual('Username is not valid');
     expect(res.statusCode).toEqual(400);
   });

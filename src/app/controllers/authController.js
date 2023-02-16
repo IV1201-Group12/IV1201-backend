@@ -8,7 +8,7 @@ module.exports = {
   register: async (req, res) => {
     req.body.role = 'applicant';
     try {
-      await userRepository.createApplicant(req.body);
+      await userRepository.createUser(req.body);
     } catch (err) {
       if (err instanceof ValidationError) {
         res.status(409).send(err.errors[0].message);

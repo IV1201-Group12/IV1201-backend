@@ -24,7 +24,7 @@ const connectToDatabase = async () => {
   });
 };
 
-describe('tests for createApplicant', () => {
+describe('tests for register', () => {
   const applicantCorrect = {
     firstname: 'test',
     lastname: 'test',
@@ -64,7 +64,7 @@ describe('tests for createApplicant', () => {
     role: 'applicant',
   };
   test('One new account is created successfully', async () => {
-    await userRepository.createApplicant(applicantCorrect);
+    await userRepository.register(applicantCorrect);
     expect(async () => {
       await database.one("SELECT * FROM users WHERE firstname='test'");
     }).not.toThrow();
@@ -72,7 +72,7 @@ describe('tests for createApplicant', () => {
 
   test('An error is thrown if person number is not numeric', async () => {
     try {
-      await userRepository.createApplicant(applicantPnrNumberNotNumeric);
+      await userRepository.register(applicantPnrNumberNotNumeric);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
@@ -82,7 +82,7 @@ describe('tests for createApplicant', () => {
   });
   test('An error is thrown if person number is of the wrong length', async () => {
     try {
-      await userRepository.createApplicant(applicantPnrNumberWrongLength);
+      await userRepository.register(applicantPnrNumberWrongLength);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
@@ -92,7 +92,7 @@ describe('tests for createApplicant', () => {
   });
   test('An error is thrown if email is invalid', async () => {
     try {
-      await userRepository.createApplicant(applicantEmailInvalid);
+      await userRepository.register(applicantEmailInvalid);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
