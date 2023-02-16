@@ -3,18 +3,29 @@ const { Sequelize, DataTypes } = require('sequelize');
 const defineApplicationModel = require('../models/application');
 const defineUserModel = require('../models/user');
 
+let sequelize;
+
 // Instantiate Sequelize object with db configuration
-const sequelize = new Sequelize(
-  dbConfig.NAME,
-  dbConfig.USERNAME,
-  dbConfig.PASSWORD,
-  {
-    host: dbConfig.HOST,
-    port: dbConfig.PORT,
-    dialect: dbConfig.DIALECT,
-    ssl: true,
-  },
-);
+// temp fix to get production up
+if (process.env.NODE_ENV === 'production') {
+  sequelize = new Sequelize(process.env.DATABSE_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: true,
+    },
+  });
+} else {
+  sequelize = new Sequelize(
+    dbConfig.NAME,
+    dbConfig.USERNAME,
+    dbConfig.PASSWORD,
+    {
+      host: dbConfig.HOST,
+      port: dbConfig.PORT,
+      dialect: dbConfig.DIALECT,
+    },
+  );
+}
 
 // Define models
 const Application = defineApplicationModel(sequelize, DataTypes);
