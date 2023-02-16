@@ -30,7 +30,7 @@ module.exports = {
     }
     const token = generateToken(existingUser);
     return res
-      .cookie('ACCESSTOKEN', token, cookieConfig)
+      .cookie('ACCESSTOKEN', token, cookieConfig())
       .status(200)
       .json({ username: existingUser.username, role: existingUser.role });
   },

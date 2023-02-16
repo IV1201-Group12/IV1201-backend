@@ -1,6 +1,6 @@
 module.exports = {
   cookieConfig: () => {
-    if (process.NODE.env === 'production') {
+    if (process.env.NODE_ENV === 'production') {
       return {
         httpOnly: true,
         sameSite: 'None',
