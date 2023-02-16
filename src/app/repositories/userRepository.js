@@ -1,4 +1,4 @@
-const db = require('../integration/RecruitmentDAO');
+const db = require('../integration/database');
 const { generateHash } = require('../utils/bcrypt');
 
 const User = db.models.User;

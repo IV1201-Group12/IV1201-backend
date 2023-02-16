@@ -1,7 +1,7 @@
 const Validators = require('../utils/validators');
 
 module.exports = {
-  validateCreateApplicant: (req, res, next) => {
+  validateRegister: (req, res, next) => {
     try {
       if (
         !Validators.isString(req.body.firstname) ||

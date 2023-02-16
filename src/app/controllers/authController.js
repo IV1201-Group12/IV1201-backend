@@ -5,7 +5,7 @@ const { generateToken } = require('../utils/jwt');
 const { ValidationError } = require('sequelize');
 
 module.exports = {
-  createApplicant: async (req, res) => {
+  register: async (req, res) => {
     req.body.role = 'applicant';
     try {
       await userRepository.createApplicant(req.body);
