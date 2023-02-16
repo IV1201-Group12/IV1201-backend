@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
     host: dbConfig.HOST,
     port: dbConfig.PORT,
     dialect: dbConfig.DIALECT,
+    ssl: true,
   },
 );
 
