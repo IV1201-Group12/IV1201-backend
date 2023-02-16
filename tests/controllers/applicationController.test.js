@@ -6,7 +6,9 @@ const pg_promise = require('pg-promise')();
 beforeAll(async () => {
   database = await connectToDatabase();
 });
-
+afterAll(async () => {
+  return database.$pool.end();
+});
 beforeEach(async () => {
   const status = "'accepted'";
   await database.none(
