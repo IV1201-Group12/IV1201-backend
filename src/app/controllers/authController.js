@@ -1,4 +1,5 @@
 const userRepository = require('../repositories/userRepository');
+const { cookieConfig } = require('../config/cookie-config');
 const { comparePassword } = require('../utils/bcrypt');
 const { generateToken } = require('../utils/jwt');
 const { ValidationError } = require('sequelize');
@@ -29,11 +30,7 @@ module.exports = {
     }
     const token = generateToken(existingUser);
     return res
-      .cookie('ACCESSTOKEN', token, {
-        httpOnly: true,
-        sameSite: 'Strict',
-        maxAge: 60 * 60 * 1000, //1h
-      })
+      .cookie('ACCESSTOKEN', token, cookieConfig())
       .status(200)
       .json({ username: existingUser.username, role: existingUser.role });
   },
