@@ -1,4 +1,4 @@
-const db = require('../integration/RecruitmentDAO');
+const db = require('../integration/database');
 
 const Application = db.models.Application;
 
@@ -8,6 +8,6 @@ module.exports = {
   },
 
   findApplicationById: async (id) => {
-    console.log(id)
+    console.log(id);
   },
 };

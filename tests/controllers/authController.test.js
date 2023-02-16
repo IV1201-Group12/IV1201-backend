@@ -24,7 +24,7 @@ const connectToDatabase = async () => {
   });
 };
 
-describe('tests for createApplicant', () => {
+describe('tests for register', () => {
   const reqCorrect = {
     body: {
       firstname: 'test',
@@ -75,17 +75,17 @@ describe('tests for createApplicant', () => {
     },
   };
   test('A new account is created successfully', async () => {
-    await authController.createApplicant(reqCorrect, res, null);
+    await authController.register(reqCorrect, res, null);
     expect(res.statusCode).toEqual(201);
   });
 
   // test('An error is thrown if person number is invalid', async () => {
-  //   await authController.createApplicant(reqPnrNumberInvalid, res, null);
+  //   await authController.register(reqPnrNumberInvalid, res, null);
   //   expect(res.message).toEqual('Person number is not valid');
   // });
 
   // test('An error is thrown if email is invalid', async () => {
-  //   await authController.createApplicant(reqEmailInvalid, res, null);
+  //   await authController.register(reqEmailInvalid, res, null);
   //   expect(res.message).toEqual('Email is not valid');
   // });
 });
