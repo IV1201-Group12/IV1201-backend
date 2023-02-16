@@ -64,7 +64,7 @@ describe('tests for register', () => {
     role: 'applicant',
   };
   test('One new account is created successfully', async () => {
-    await userRepository.register(applicantCorrect);
+    await userRepository.createUser(applicantCorrect);
     expect(async () => {
       await database.one("SELECT * FROM users WHERE firstname='test'");
     }).not.toThrow();
@@ -72,7 +72,7 @@ describe('tests for register', () => {
 
   test('An error is thrown if person number is not numeric', async () => {
     try {
-      await userRepository.register(applicantPnrNumberNotNumeric);
+      await userRepository.createUser(applicantPnrNumberNotNumeric);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
@@ -82,7 +82,7 @@ describe('tests for register', () => {
   });
   test('An error is thrown if person number is of the wrong length', async () => {
     try {
-      await userRepository.register(applicantPnrNumberWrongLength);
+      await userRepository.createUser(applicantPnrNumberWrongLength);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
@@ -92,7 +92,7 @@ describe('tests for register', () => {
   });
   test('An error is thrown if email is invalid', async () => {
     try {
-      await userRepository.register(applicantEmailInvalid);
+      await userRepository.createUser(applicantEmailInvalid);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
