@@ -6,4 +6,6 @@ router.get('/', applicationController.getAllApplications);
 
 router.get('/:id', applicationController.getApplication);
 
+router.put('/:id', applicationController.changeStatusOfApplication);
+
 module.exports = router;

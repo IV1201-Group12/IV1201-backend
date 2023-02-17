@@ -3,6 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     'application',
     {
       status: DataTypes.TEXT,
+      version: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+      },
     },
     {
       // TODO: add validation rules here

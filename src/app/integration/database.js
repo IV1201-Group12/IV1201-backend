@@ -2,6 +2,8 @@ const dbConfig = require('../config/db-config');
 const { Sequelize, DataTypes } = require('sequelize');
 const defineApplicationModel = require('../models/application');
 const defineUserModel = require('../models/user');
+const defineAvailabilityModel = require('../models/availability');
+const defineCompetenceModel = require('../models/competence');
 
 let sequelize;
 
@@ -30,11 +32,19 @@ if (process.env.NODE_ENV === 'production') {
 // Define models
 const Application = defineApplicationModel(sequelize, DataTypes);
 const User = defineUserModel(sequelize, DataTypes);
+const Availability = defineAvailabilityModel(sequelize, DataTypes);
+const Competence = defineCompetenceModel(sequelize, DataTypes);
 
 // Define relationships
 // TODO: enforce that applications can only associate with a user model with role applicant
-User.hasMany(Application, { foreignKey: 'applicantId' });
-Application.belongsTo(User, { as: 'applicant', foreignKey: 'applicantId' });
+User.hasOne(Application);
+Application.belongsTo(User);
+
+Application.hasMany(Availability);
+Availability.belongsTo(Application);
+
+Application.hasMany(Competence);
+Competence.belongsTo(Application);
 
 // Define exportable
 const db = {
@@ -42,6 +52,8 @@ const db = {
   models: {
     Application: Application,
     User: User,
+    Availability,
+    Competence,
   },
 };
 
