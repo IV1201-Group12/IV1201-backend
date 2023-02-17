@@ -1,5 +1,8 @@
 const userRepository = require('../repositories/userRepository');
-const { cookieConfig } = require('../config/cookie-config');
+const {
+  cookieConfigLogin,
+  cookieConfigLogout,
+} = require('../config/cookie-config');
 const { comparePassword } = require('../utils/bcrypt');
 const { generateToken } = require('../utils/jwt');
 const { ValidationError } = require('sequelize');
@@ -30,16 +33,12 @@ module.exports = {
     }
     const token = generateToken(existingUser);
     return res
-      .cookie('ACCESSTOKEN', token, cookieConfig())
+      .cookie('ACCESSTOKEN', token, cookieConfigLogin())
       .status(200)
       .json({ username: existingUser.username, role: existingUser.role });
   },
   logout: async (req, res) => {
-    res.cookie('ACCESSTOKEN', 'none', {
-      maxAge: 5 * 1000, //5s
-      httpOnly: true,
-      sameSite: 'Strict',
-    });
+    res.cookie('ACCESSTOKEN', 'none', cookieConfigLogout());
     res.status(200).json({ message: 'Logged out' });
   },
 };
