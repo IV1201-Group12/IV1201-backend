@@ -39,6 +39,10 @@ const Competence = defineCompetenceModel(sequelize, DataTypes);
 // TODO: enforce that applications can only associate with a user model with role applicant
 User.hasOne(Application);
 Application.belongsTo(User);
+Application.hasMany(Competence);
+Competence.belongsTo(Application);
+Application.hasOne(Availability);
+Availability.belongsTo(Application);
 
 Application.hasMany(Availability);
 Availability.belongsTo(Application);
