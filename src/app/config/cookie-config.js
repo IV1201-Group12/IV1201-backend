@@ -1,4 +1,13 @@
+/**
+ * The cookie configurations used for the authentication cookies.
+ */
 module.exports = {
+  /**
+   * Function that returns the cookie configurations for the login cookie.
+   * One configuration for communication over HTTPS.
+   * One configuration for communication over HTTP.
+   * @returns The cookie configuration for the current environment.
+   */
   cookieConfigLogin: () => {
     if (process.env.NODE_ENV === 'production') {
       return {
@@ -15,6 +24,12 @@ module.exports = {
       };
     }
   },
+  /**
+   * Function that returns the cookie configurations for the logout cookie.
+   * One configuration for communication over HTTPS.
+   * One configuration for communication over HTTP.
+   * @returns The cookie configuration for the current environment.
+   */
   cookieConfigLogout: () => {
     if (process.env.NODE_ENV === 'production') {
       return {
