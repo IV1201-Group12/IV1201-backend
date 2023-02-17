@@ -37,18 +37,14 @@ const Competence = defineCompetenceModel(sequelize, DataTypes);
 
 // Define relationships
 // TODO: enforce that applications can only associate with a user model with role applicant
-User.hasOne(Application);
-Application.belongsTo(User);
+User.hasMany(Application, { foreignKey: 'applicantId' });
+Application.belongsTo(User, { as: 'applicant' });
+
 Application.hasMany(Competence);
 Competence.belongsTo(Application);
-Application.hasOne(Availability);
-Availability.belongsTo(Application);
 
 Application.hasMany(Availability);
 Availability.belongsTo(Application);
-
-Application.hasMany(Competence);
-Competence.belongsTo(Application);
 
 // Define exportable
 const db = {
@@ -56,8 +52,8 @@ const db = {
   models: {
     Application: Application,
     User: User,
-    Availability,
-    Competence,
+    Availability: Availability,
+    Competence: Competence,
   },
 };
 

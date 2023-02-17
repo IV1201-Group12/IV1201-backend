@@ -3,16 +3,12 @@ module.exports = (sequelize, DataTypes) => {
     'availability',
     {
       from_date: {
-        type: {
-          type: DataTypes.DATEONLY,
-          allowNull: false,
-        },
+        type: DataTypes.DATEONLY,
+        allowNull: false,
       },
       to_date: {
-        type: {
-          type: DataTypes.DATEONLY,
-          allowNull: false,
-        },
+        type: DataTypes.DATEONLY,
+        allowNull: false,
       },
     },
     {
