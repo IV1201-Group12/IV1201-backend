@@ -21,7 +21,7 @@ module.exports = {
   findApplicationById: async (id) => {
     return await Application.findOne({
       where: { id },
-      attributes: ['status'],
+      attributes: ['status', 'version'],
       include: [
         {
           model: User,
@@ -40,5 +40,14 @@ module.exports = {
   },
   updateStatus: async (status, id) => {
     return await Application.update({ status }, { where: { id } });
+  },
+  findCurrentApplicationVersionById: async (id) => {
+    return await Application.findOne({
+      where: { id },
+      attributes: ['version'],
+    });
+  },
+  updateVersion: async (version, id) => {
+    return await Application.update({ version }, { where: { id } });
   },
 };
