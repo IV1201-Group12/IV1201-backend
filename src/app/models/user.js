@@ -12,12 +12,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.TEXT,
+        unique: true,
+        allowNull: false,
         validate: {
           isEmail: true,
         },
       },
       pnr: {
         type: DataTypes.TEXT,
+        unique: true,
+        allowNull: false,
         validate: {
           // isValidPnr(value) {
           //   if (Number.isNaN(value))
@@ -32,13 +36,18 @@ module.exports = (sequelize, DataTypes) => {
       username: {
         type: DataTypes.TEXT,
         unique: true,
+        allowNull: false,
       },
-      password: DataTypes.TEXT,
-      // TODO: use enum instead
-      role: DataTypes.TEXT,
+      password: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      role: {
+        type: DataTypes.ENUM('applicant', 'recruiter'),
+        allowNull: false,
+      },
     },
     {
-      // TODO: add validation rules here
       timestamps: false,
     },
   );

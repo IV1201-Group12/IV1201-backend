@@ -15,12 +15,14 @@ beforeEach(async () => {
     "insert into users values (9999, 'test', 'test', 'testtt@gmail.com', '098765432112', 'testusername', 'testpassword', 'applicant')",
   );
   await database.none(
-    'insert into applications (status, "userId") values (' + status + ', 9999)',
+    'insert into applications (status, "applicantId") values (' +
+      status +
+      ', 9999)',
   );
 });
 
 afterEach(async () => {
-  await database.none("DELETE FROM applications WHERE 'userId'='9999'");
+  await database.none("DELETE FROM applications WHERE 'applicantId'='9999'");
   await database.none("DELETE from users WHERE id='9999'");
 });
 

@@ -8,10 +8,11 @@ const Competence = db.models.Competence;
 module.exports = {
   findAllApplications: async () => {
     return await Application.findAll({
-      attributes: ['status', 'id'],
+      attributes: ['id', 'status'],
       include: [
         {
           model: User,
+          as: 'applicant',
           attributes: ['firstname', 'lastname'],
         },
       ],
@@ -25,6 +26,7 @@ module.exports = {
       include: [
         {
           model: User,
+          as: 'applicant',
           attributes: ['firstname', 'lastname', 'email', 'pnr'],
         },
         {
