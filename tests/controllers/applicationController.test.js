@@ -22,7 +22,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
-  await database.none("DELETE FROM applications WHERE 'applicantId'='9999'");
+  await database.none('DELETE FROM applications WHERE "applicantId"=9999');
   await database.none("DELETE from users WHERE id='9999'");
 });
 
