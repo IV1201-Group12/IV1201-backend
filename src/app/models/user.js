@@ -23,12 +23,6 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         allowNull: false,
         validate: {
-          // isValidPnr(value) {
-          //   if (Number.isNaN(value))
-          //     throw new Error('Person number is not valid.');
-
-          //   if (value.length !== 12)
-          //     throw new Error('Person number is not valid.');
           isNumeric: true,
           len: [12],
         },

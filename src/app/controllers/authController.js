@@ -10,6 +10,7 @@ const ValidationError = require('sequelize');
 
 module.exports = {
   register: async (req, res) => {
+
     return database.sequelize.transaction(async (t) => {
       req.body.role = 'applicant';
       try {
@@ -20,7 +21,6 @@ module.exports = {
         } else {
           res.status(400).send('Server error');
         }
-      }
       res.status(201).send();
     });
   },
