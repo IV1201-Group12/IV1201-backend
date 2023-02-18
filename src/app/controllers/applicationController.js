@@ -2,7 +2,7 @@ const applicationRepository = require('../repositories/applicationRepository');
 const database = require('../integration/database');
 module.exports = {
   getAllApplications: async (req, res) => {
-    return database.sequelize.transaction(async (t) => {
+    return database.sequelize.transaction(async () => {
       try {
         const applications = await applicationRepository.findAllApplications();
         res.json(applications);
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   getApplication: async (req, res) => {
-    return database.sequelize.transaction(async (t) => {
+    return database.sequelize.transaction(async () => {
       try {
         const application = await applicationRepository.findApplicationById(
           req.params.id,
@@ -25,7 +25,7 @@ module.exports = {
     });
   },
   changeStatusOfApplication: async (req, res) => {
-    return database.sequelize.transaction(async (t) => {
+    return database.sequelize.transaction(async () => {
       try {
         let currentApplicationVersion =
           await applicationRepository.findCurrentApplicationVersionById(
@@ -48,9 +48,8 @@ module.exports = {
         );
         res.status(201).send();
       } catch (err) {
-        console.log(err);
+        res.status(500).send(err);
       }
     });
-};
-
+  },
 };
