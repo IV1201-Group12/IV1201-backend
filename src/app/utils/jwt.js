@@ -9,8 +9,16 @@ module.exports = {
    * Generates a token from a given user object, using the id, username and role as claims.
    * @param {*} user The given user object.
    * @returns The generated token.
+   * @throws Will throw an error if the given user object does not contain the required fields.
    */
   generateToken: (user) => {
+    if (
+      user.id === undefined ||
+      user.username === undefined ||
+      user.role === undefined
+    ) {
+      throw new Error('Could not generate token.');
+    }
     return jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       process.env.JWT_SECRET,
