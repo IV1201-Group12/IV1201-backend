@@ -1,8 +1,5 @@
 const applicationRepository = require('../repositories/applicationRepository');
 const database = require('../integration/database');
-
-database.sequelize.transaction;
-
 module.exports = {
   getAllApplications: async (req, res) => {
     return database.sequelize.transaction(async (t) => {
