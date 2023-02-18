@@ -22,6 +22,7 @@ jobs:
       DATABASE_PASSWORD: postgres
       DATABASE_NAME: recruitment_application
       DATABASE_DIALECT: postgres
+      JWT_SECRET: THISISATESTSECRET
 
     runs-on: ubuntu-latest
 

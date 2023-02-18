@@ -16,7 +16,7 @@ module.exports = {
     return (req, res, next) => {
       const token = req.cookies.ACCESSTOKEN;
       if (!token) {
-        return res.status(403).send('No token');
+        return res.status(401).send('No token');
       }
       try {
         const tokenData = verifyToken(token);
@@ -26,7 +26,7 @@ module.exports = {
         if (!role.includes(req.role)) return res.status(403).send('Wrong role');
         return next();
       } catch (err) {
-        return res.status(403).send(err);
+        return res.status(401).send(err);
       }
     };
   },
