@@ -23,6 +23,17 @@ if (process.env.NODE_ENV === 'production') {
       ssl: true,
     },
   });
+} else if (process.env.NODE_ENV === 'acctest') {
+  sequelize = new Sequelize(
+    'recruitment_application_acctest',
+    dbConfig.USERNAME,
+    dbConfig.PASSWORD,
+    {
+      host: dbConfig.HOST,
+      port: dbConfig.PORT,
+      dialect: dbConfig.DIALECT,
+    },
+  );
 } else {
   sequelize = new Sequelize(
     dbConfig.NAME,
@@ -67,7 +78,11 @@ const db = {
 // Start db connection
 (async () => {
   try {
-    await sequelize.sync();
+    if (process.env.NODE_ENV === 'acctest') {
+      await sequelize.sync({ force: true });
+    } else {
+      await sequelize.sync();
+    }
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {
