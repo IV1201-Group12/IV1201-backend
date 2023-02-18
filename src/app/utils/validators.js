@@ -13,8 +13,7 @@ module.exports = {
 
   isValidEmail(value) {
     if (!value) return false;
-    const regex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const regex = /^^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     if (value.match(regex)) return true;
 
