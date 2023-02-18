@@ -8,7 +8,9 @@ let database;
 beforeAll(async () => {
   database = await connectToDatabase();
 });
-
+afterAll(async () => {
+  return database.$pool.end();
+});
 afterEach(async () => {
   await database.none("DELETE FROM users WHERE firstname='test'");
 });
@@ -22,7 +24,7 @@ const connectToDatabase = async () => {
   });
 };
 
-describe('tests for createApplicant', () => {
+describe('tests for register', () => {
   const applicantCorrect = {
     firstname: 'test',
     lastname: 'test',
@@ -33,11 +35,20 @@ describe('tests for createApplicant', () => {
     role: 'applicant',
   };
 
-  const applicantPnrNumberInvalid = {
+  const applicantPnrNumberWrongLength = {
     firstname: 'test',
     lastname: 'test',
     email: 'test@gmail.com',
     pnr: '123456',
+    username: 'test11',
+    password: '12345test',
+    role: 'applicant',
+  };
+  const applicantPnrNumberNotNumeric = {
+    firstname: 'test',
+    lastname: 'test',
+    email: 'test@gmail.com',
+    pnr: 'abcabcabcabc',
     username: 'test11',
     password: '12345test',
     role: 'applicant',
@@ -53,26 +64,35 @@ describe('tests for createApplicant', () => {
     role: 'applicant',
   };
   test('One new account is created successfully', async () => {
-    await userRepository.createApplicant(applicantCorrect);
+    await userRepository.createUser(applicantCorrect);
     expect(async () => {
       await database.one("SELECT * FROM users WHERE firstname='test'");
     }).not.toThrow();
   });
 
-  test('An error is thrown if person number is invalid', async () => {
+  test('An error is thrown if person number is not numeric', async () => {
     try {
-      await userRepository.createApplicant(applicantPnrNumberInvalid);
+      await userRepository.createUser(applicantPnrNumberNotNumeric);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(
-        'Validation error: Person number is not valid.',
+        'Validation error: Validation isNumeric on pnr failed',
       );
     }
   });
-
+  test('An error is thrown if person number is of the wrong length', async () => {
+    try {
+      await userRepository.createUser(applicantPnrNumberWrongLength);
+      fail('An error was not thrown.');
+    } catch (err) {
+      expect(err.message).toEqual(
+        'Validation error: Validation len on pnr failed',
+      );
+    }
+  });
   test('An error is thrown if email is invalid', async () => {
     try {
-      await userRepository.createApplicant(applicantEmailInvalid);
+      await userRepository.createUser(applicantEmailInvalid);
       fail('An error was not thrown.');
     } catch (err) {
       expect(err.message).toEqual(

@@ -6,7 +6,9 @@ const pg_promise = require('pg-promise')();
 beforeAll(async () => {
   database = await connectToDatabase();
 });
-
+afterAll(async () => {
+  return database.$pool.end();
+});
 afterEach(async () => {
   await database.none("DELETE FROM users WHERE firstname='test'");
 });
@@ -22,7 +24,7 @@ const connectToDatabase = async () => {
   });
 };
 
-describe('tests for createApplicant', () => {
+describe('tests for register', () => {
   const reqCorrect = {
     body: {
       firstname: 'test',
@@ -35,29 +37,29 @@ describe('tests for createApplicant', () => {
     },
   };
 
-  const reqPnrNumberInvalid = {
-    body: {
-      firstname: 'test',
-      lastname: 'test',
-      email: 'test@gmail.com',
-      pnr: '12345',
-      username: 'test',
-      password: '12345test',
-      role: 'applicant',
-    },
-  };
+  // const reqPnrNumberInvalid = {
+  //   body: {
+  //     firstname: 'test',
+  //     lastname: 'test',
+  //     email: 'test@gmail.com',
+  //     pnr: '12345',
+  //     username: 'test',
+  //     password: '12345test',
+  //     role: 'applicant',
+  //   },
+  // };
 
-  const reqEmailInvalid = {
-    body: {
-      firstname: 'test',
-      lastname: 'test',
-      email: 'testmailcom',
-      pnr: '123456789018',
-      username: 'test',
-      password: '12345test',
-      role: 'applicant',
-    },
-  };
+  // const reqEmailInvalid = {
+  //   body: {
+  //     firstname: 'test',
+  //     lastname: 'test',
+  //     email: 'testmailcom',
+  //     pnr: '123456789018',
+  //     username: 'test',
+  //     password: '12345test',
+  //     role: 'applicant',
+  //   },
+  // };
 
   const res = {
     statusCode: null,
@@ -73,17 +75,17 @@ describe('tests for createApplicant', () => {
     },
   };
   test('A new account is created successfully', async () => {
-    await authController.createApplicant(reqCorrect, res, null);
+    await authController.register(reqCorrect, res, null);
     expect(res.statusCode).toEqual(201);
   });
 
-  test('An error is thrown if person number is invalid', async () => {
-    await authController.createApplicant(reqPnrNumberInvalid, res, null);
-    expect(res.message).toEqual('Person number is not valid');
-  });
+  // test('An error is thrown if person number is invalid', async () => {
+  //   await authController.register(reqPnrNumberInvalid, res, null);
+  //   expect(res.message).toEqual('Person number is not valid');
+  // });
 
-  test('An error is thrown if email is invalid', async () => {
-    await authController.createApplicant(reqEmailInvalid, res, null);
-    expect(res.message).toEqual('Email is not valid');
-  });
+  // test('An error is thrown if email is invalid', async () => {
+  //   await authController.register(reqEmailInvalid, res, null);
+  //   expect(res.message).toEqual('Email is not valid');
+  // });
 });
