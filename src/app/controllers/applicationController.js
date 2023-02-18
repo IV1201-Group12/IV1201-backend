@@ -1,5 +1,4 @@
 const applicationRepository = require('../repositories/applicationRepository');
-const database = require('../integration/database');
 
 module.exports = {
   getAllApplications: async (req, res) => {
@@ -22,6 +21,7 @@ module.exports = {
     }
   },
 
+  // TODO: A little bit broken at the moment. When updating the status the one who did the action outdates the application for itself so if that user tries to update again a version mismatch will happen.
   changeStatusOfApplication: async (req, res) => {
     try {
       await applicationRepository.updateStatus(

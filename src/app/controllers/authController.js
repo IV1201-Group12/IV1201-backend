@@ -5,7 +5,6 @@ const {
 } = require('../config/cookie-config');
 const { comparePassword } = require('../utils/bcrypt');
 const { generateToken } = require('../utils/jwt');
-const database = require('../integration/database');
 const { ValidationError } = require('sequelize');
 
 module.exports = {

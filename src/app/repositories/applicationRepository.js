@@ -7,7 +7,7 @@ const Competence = models.Competence;
 
 module.exports = {
   findAllApplications: async () => {
-    return await sequelize.transaction(async (t) => {
+    return await sequelize.transaction(async () => {
       return await Application.findAll({
         attributes: ['id', 'status'],
         include: [
@@ -22,7 +22,7 @@ module.exports = {
   },
 
   findApplicationById: async (id) => {
-    return await sequelize.transaction(async (t) => {
+    return await sequelize.transaction(async () => {
       return await Application.findOne({
         where: { id },
         attributes: ['status', 'version'],
@@ -46,23 +46,19 @@ module.exports = {
   },
 
   updateStatus: async (newStatus, currentversion, id) => {
-    try {
-      return await sequelize.transaction(async (t) => {
-        const {
-          dataValues: { version },
-        } = await Application.findOne({
-          where: { id },
-          attributes: ['version'],
-        });
-        if (version !== currentversion) throw 'version mismatch';
-        await Application.update({ status: newStatus }, { where: { id } });
-        return await Application.update(
-          { version: version + 1 },
-          { where: { id } },
-        );
+    return await sequelize.transaction(async () => {
+      const {
+        dataValues: { version },
+      } = await Application.findOne({
+        where: { id },
+        attributes: ['version'],
       });
-    } catch (err) {
-      throw err;
-    }
+      if (version !== currentversion) throw 'version mismatch';
+      await Application.update({ status: newStatus }, { where: { id } });
+      return await Application.update(
+        { version: version + 1 },
+        { where: { id } },
+      );
+    });
   },
 };
