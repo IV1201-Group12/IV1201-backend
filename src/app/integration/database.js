@@ -1,9 +1,16 @@
 const dbConfig = require('../config/db-config');
 const { Sequelize, DataTypes } = require('sequelize');
+const cls = require('cls-hooked');
 const defineApplicationModel = require('../models/application');
 const defineUserModel = require('../models/user');
 const defineAvailabilityModel = require('../models/availability');
 const defineCompetenceModel = require('../models/competence');
+
+/**
+ * Creates a namespace to enable automatic inclusion of queries in transactions.
+ */
+const namespace = cls.createNamespace('global');
+Sequelize.useCLS(namespace);
 
 let sequelize;
 
