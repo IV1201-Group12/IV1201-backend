@@ -3,10 +3,16 @@ module.exports = (sequelize, DataTypes) => {
     'competence',
     {
       name: {
-        type: DataTypes.TEXT,
+        type: DataTypes.ENUM(
+          'ticket sales',
+          'lotteries',
+          'roller coaster operation',
+        ),
+        allowNull: false,
       },
       years_of_experience: {
         type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     {

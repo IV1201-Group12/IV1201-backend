@@ -37,30 +37,6 @@ describe('tests for register', () => {
     },
   };
 
-  // const reqPnrNumberInvalid = {
-  //   body: {
-  //     firstname: 'test',
-  //     lastname: 'test',
-  //     email: 'test@gmail.com',
-  //     pnr: '12345',
-  //     username: 'test',
-  //     password: '12345test',
-  //     role: 'applicant',
-  //   },
-  // };
-
-  // const reqEmailInvalid = {
-  //   body: {
-  //     firstname: 'test',
-  //     lastname: 'test',
-  //     email: 'testmailcom',
-  //     pnr: '123456789018',
-  //     username: 'test',
-  //     password: '12345test',
-  //     role: 'applicant',
-  //   },
-  // };
-
   const res = {
     statusCode: null,
     message: null,

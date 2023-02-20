@@ -4,9 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       from_date: {
         type: DataTypes.DATEONLY,
+        allowNull: false,
       },
       to_date: {
         type: DataTypes.DATEONLY,
+        allowNull: false,
       },
     },
     {

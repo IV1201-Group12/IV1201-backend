@@ -2,7 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const Application = sequelize.define(
     'application',
     {
-      status: DataTypes.TEXT,
+      status: {
+        type: DataTypes.ENUM('rejected', 'accepted', 'unhandled'),
+        allowNull: false,
+        defaultValue: 'unhandled',
+      },
       version: {
         type: DataTypes.INTEGER,
         allowNull: false,
