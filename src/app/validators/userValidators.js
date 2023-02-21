@@ -4,7 +4,7 @@ module.exports = {
   },
 
   isValidName(value) {
-    return value.match(/^[a-z ,.'-]+$/);
+    return value.length > 1;
   },
 
   isValidEmail(value) {
@@ -31,6 +31,6 @@ module.exports = {
   },
 
   isValidPassword(value) {
-    return value.length() > 3;
+    return value.length > 3;
   },
 };
