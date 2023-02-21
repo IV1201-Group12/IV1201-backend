@@ -3,12 +3,12 @@ module.exports = {
     return typeof value === 'string';
   },
 
-  isValidPnr(value) {
-    if (!value) return false;
-    if (Number.isNaN(value)) return false;
+  isValidFirstname(value) {
+    return true;
+  },
 
-    if (value.length === 12) return true;
-    else return false;
+  isValidLastname(value) {
+    return true;
   },
 
   isValidEmail(value) {
@@ -18,5 +18,21 @@ module.exports = {
     if (value.match(regex)) return true;
 
     return false;
+  },
+
+  isValidPnr(value) {
+    if (!value) return false;
+    if (isNaN(value)) return false;
+
+    if (value.length === 12) return true;
+    else return false;
+  },
+
+  isValidUsername(value) {
+    return true;
+  },
+
+  isValidPassword(value) {
+    return true;
   },
 };

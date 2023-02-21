@@ -1,3 +1,13 @@
+const { isValid } = require('../utils/validation');
+const {
+  isValidPnr,
+  isValidEmail,
+  isValidUsername,
+  isValidPassword,
+  isValidFirstname,
+  isValidLastname,
+} = require('../validators/userValidators');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'user',
@@ -5,17 +15,29 @@ module.exports = (sequelize, DataTypes) => {
       firstname: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+          validate(value) {
+            isValid(value, isValidFirstname, 'Firstname is not valid');
+          },
+        },
       },
       lastname: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+          validate(value) {
+            isValid(value, isValidLastname, 'Lastname is not valid');
+          },
+        },
       },
       email: {
         type: DataTypes.TEXT,
         unique: true,
         allowNull: false,
         validate: {
-          isEmail: true,
+          validate(value) {
+            isValid(value, isValidEmail, 'Email is not valid');
+          },
         },
       },
       pnr: {
@@ -23,18 +45,29 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         allowNull: false,
         validate: {
-          isNumeric: true,
-          len: [12],
+          validate(value) {
+            isValid(value, isValidPnr, 'Pnr is not valid');
+          },
         },
       },
       username: {
         type: DataTypes.TEXT,
         unique: true,
         allowNull: false,
+        validate: {
+          validate(value) {
+            isValid(value, isValidUsername, 'Username is not valid');
+          },
+        },
       },
       password: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+          validate(value) {
+            isValid(value, isValidPassword, 'Password is not valid');
+          },
+        },
       },
       role: {
         type: DataTypes.ENUM('applicant', 'recruiter'),
