@@ -4,8 +4,7 @@ const {
   isValidEmail,
   isValidUsername,
   isValidPassword,
-  isValidFirstname,
-  isValidLastname,
+  isValidName,
 } = require('../validators/userValidators');
 
 module.exports = (sequelize, DataTypes) => {
@@ -17,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           validate(value) {
-            isValid(value, isValidFirstname, 'Firstname is not valid');
+            isValid(value, isValidName, 'Firstname is not valid');
           },
         },
       },
@@ -26,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           validate(value) {
-            isValid(value, isValidLastname, 'Lastname is not valid');
+            isValid(value, isValidName, 'Lastname is not valid');
           },
         },
       },

@@ -3,12 +3,8 @@ module.exports = {
     return typeof value === 'string';
   },
 
-  isValidFirstname(value) {
-    return true;
-  },
-
-  isValidLastname(value) {
-    return true;
+  isValidName(value) {
+    return value.match(/^[a-z ,.'-]+$/);
   },
 
   isValidEmail(value) {
@@ -29,10 +25,12 @@ module.exports = {
   },
 
   isValidUsername(value) {
-    return true;
+    return value.match(
+      /^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
+    );
   },
 
   isValidPassword(value) {
-    return true;
+    return value.length() > 3;
   },
 };

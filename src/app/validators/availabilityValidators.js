@@ -1,8 +1,8 @@
 module.exports = {
   isValidFromDate(value) {
-    return true;
+    return !(Date.parse(value) - Date.parse(new Date()) > 0);
   },
   isValidToDate(value) {
-    return true;
+    return !(Date.parse(value) - Date.parse(new Date()) > 0);
   },
 };
