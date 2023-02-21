@@ -25,8 +25,7 @@ module.exports = {
   },
 
   isValidUsername(value) {
-    const regex = /^(?=.{3,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
-    return value.match(regex);
+    return value.length > 3;
   },
 
   isValidPassword(value) {
