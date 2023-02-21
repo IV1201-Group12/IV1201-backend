@@ -1,3 +1,6 @@
+const { isValid } = require('../utils/validation');
+const { isValidVersion } = require('../validators/applicationValidators');
+
 module.exports = (sequelize, DataTypes) => {
   const Application = sequelize.define(
     'application',
@@ -11,10 +14,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 1,
+        validate: {
+          validate(value) {
+            isValid(value, isValidVersion, 'Version is not valid');
+          },
+        },
       },
     },
     {
-      // TODO: add validation rules here
       timestamps: false,
     },
   );
