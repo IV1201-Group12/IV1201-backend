@@ -9,10 +9,8 @@ beforeAll(async () => {
   database = await connectToDatabase();
 });
 afterAll(async () => {
-  return database.$pool.end();
-});
-afterEach(async () => {
   await database.none("DELETE FROM users WHERE firstname='test'");
+  return database.$pool.end();
 });
 
 const connectToDatabase = async () => {

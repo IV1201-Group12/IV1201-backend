@@ -20,29 +20,20 @@ module.exports = {
       res.status(500).send(err);
     }
   },
+
+  // TODO: A little bit broken at the moment. When updating the status the one who did the action outdates the application for itself so if that user tries to update again a version mismatch will happen.
   changeStatusOfApplication: async (req, res) => {
     try {
-      let currentApplicationVersion =
-        await applicationRepository.findCurrentApplicationVersionById(
-          req.body.id,
-        );
-      currentApplicationVersion = currentApplicationVersion.dataValues.version;
-      console.log('currentapp' + currentApplicationVersion);
-      console.log('version' + req.body.version);
-      if (currentApplicationVersion !== req.body.version) {
-        return res
-          .status(409)
-          .send('The current application is being modified by another user');
-      }
-      const incrementedVersion = req.body.version + 1;
-      await applicationRepository.updateStatus(req.body.status, req.body.id);
-      await applicationRepository.updateVersion(
-        incrementedVersion,
+      await applicationRepository.updateStatus(
+        req.body.status,
+        req.body.version,
         req.body.id,
       );
-      res.status(201).send();
+      res.status(200).send();
     } catch (err) {
-      console.log(err);
+      if (err === 'version mismatch')
+        return res.status(409).send('version mismatch');
+      else res.status(500).send(err);
     }
   },
 };

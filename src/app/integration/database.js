@@ -1,9 +1,16 @@
 const dbConfig = require('../config/db-config');
 const { Sequelize, DataTypes } = require('sequelize');
+const cls = require('cls-hooked');
 const defineApplicationModel = require('../models/application');
 const defineUserModel = require('../models/user');
 const defineAvailabilityModel = require('../models/availability');
 const defineCompetenceModel = require('../models/competence');
+
+/**
+ * Creates a namespace to enable automatic inclusion of queries in transactions.
+ */
+const namespace = cls.createNamespace('global');
+Sequelize.useCLS(namespace);
 
 let sequelize;
 
@@ -16,6 +23,17 @@ if (process.env.NODE_ENV === 'production') {
       ssl: true,
     },
   });
+} else if (process.env.NODE_ENV === 'acctest') {
+  sequelize = new Sequelize(
+    'recruitment_application_acctest',
+    dbConfig.USERNAME,
+    dbConfig.PASSWORD,
+    {
+      host: dbConfig.HOST,
+      port: dbConfig.PORT,
+      dialect: dbConfig.DIALECT,
+    },
+  );
 } else {
   sequelize = new Sequelize(
     dbConfig.NAME,
@@ -60,7 +78,11 @@ const db = {
 // Start db connection
 (async () => {
   try {
-    await sequelize.sync();
+    if (process.env.NODE_ENV === 'acctest') {
+      await sequelize.sync({ force: true });
+    } else {
+      await sequelize.sync();
+    }
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {

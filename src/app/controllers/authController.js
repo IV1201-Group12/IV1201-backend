@@ -14,9 +14,9 @@ module.exports = {
       await userRepository.createUser(req.body);
     } catch (err) {
       if (err instanceof ValidationError) {
-        res.status(409).send(err.errors[0].message);
+        res.status(400).send(err.errors[0].message);
       } else {
-        res.status(400).send('Server error');
+        res.status(500).send('Error');
       }
     }
     res.status(201).send();
