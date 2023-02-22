@@ -26,17 +26,6 @@ if (process.env.NODE_ENV === 'production') {
       ssl: true,
     },
   });
-} else if (process.env.NODE_ENV === 'acctest') {
-  sequelize = new Sequelize(
-    'recruitment_application_acctest',
-    dbConfig.USERNAME,
-    dbConfig.PASSWORD,
-    {
-      host: dbConfig.HOST,
-      port: dbConfig.PORT,
-      dialect: dbConfig.DIALECT,
-    },
-  );
 } else {
   sequelize = new Sequelize(
     dbConfig.NAME,
