@@ -12,6 +12,9 @@ const defineCompetenceModel = require('../models/competence');
 const namespace = cls.createNamespace('global');
 Sequelize.useCLS(namespace);
 
+/**
+ * Configures the Sequelize instance to be used by the application.
+ */
 let sequelize;
 
 // Instantiate Sequelize object with db configuration
@@ -23,17 +26,6 @@ if (process.env.NODE_ENV === 'production') {
       ssl: true,
     },
   });
-} else if (process.env.NODE_ENV === 'acctest') {
-  sequelize = new Sequelize(
-    'recruitment_application_acctest',
-    dbConfig.USERNAME,
-    dbConfig.PASSWORD,
-    {
-      host: dbConfig.HOST,
-      port: dbConfig.PORT,
-      dialect: dbConfig.DIALECT,
-    },
-  );
 } else {
   sequelize = new Sequelize(
     dbConfig.NAME,
@@ -47,13 +39,17 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-// Define models
+/**
+ * Defines the models for sequelize to use.
+ */
 const Application = defineApplicationModel(sequelize, DataTypes);
 const User = defineUserModel(sequelize, DataTypes);
 const Availability = defineAvailabilityModel(sequelize, DataTypes);
 const Competence = defineCompetenceModel(sequelize, DataTypes);
 
-// Define relationships
+/**
+ * Defines the associations between the models.
+ */
 // TODO: enforce that applications can only associate with a user model with role applicant
 User.hasMany(Application, { foreignKey: 'applicantId' });
 Application.belongsTo(User, { as: 'applicant' });
@@ -64,7 +60,9 @@ Competence.belongsTo(Application);
 Application.hasMany(Availability);
 Availability.belongsTo(Application);
 
-// Define exportable
+/**
+ * The object to be exported and used as an interface for other modules.
+ */
 const db = {
   sequelize: sequelize,
   models: {
@@ -75,7 +73,9 @@ const db = {
   },
 };
 
-// Start db connection
+/**
+ * Starts the connection with assigned configuration.
+ */
 (async () => {
   try {
     if (process.env.NODE_ENV === 'acctest') {

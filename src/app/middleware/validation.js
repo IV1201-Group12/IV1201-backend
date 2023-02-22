@@ -1,4 +1,4 @@
-const Validators = require('../utils/validators');
+const Validators = require('../validators/userValidators');
 
 module.exports = {
   validateRegister: (req, res, next) => {
