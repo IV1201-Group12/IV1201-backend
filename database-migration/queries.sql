@@ -22,9 +22,8 @@ select
 from person, "role"
 where person.role_id = "role".role_id
 
-select distinct person_id as id, 'unhandled' as status, 1 as "version", person_id as "applicantId"
-from competence_profile
-
+select distinct availability.person_id as id, 'unhandled' as status, 1 as "version", availability.person_id as "applicantId"
+from competence_profile, availability
 
 select from_date, "to_date", person_id as "applicationId"
 from availability
