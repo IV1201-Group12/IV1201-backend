@@ -5,6 +5,7 @@ const defineApplicationModel = require('../models/application');
 const defineUserModel = require('../models/user');
 const defineAvailabilityModel = require('../models/availability');
 const defineCompetenceModel = require('../models/competence');
+const { generateHash } = require('../utils/bcrypt');
 
 /**
  * Creates a namespace to enable automatic inclusion of queries in transactions.
@@ -80,6 +81,38 @@ const db = {
   try {
     if (process.env.NODE_ENV === 'acctest') {
       await sequelize.sync({ force: true });
+      await sequelize.transaction(async () => {
+        await User.create({
+          firstname: 'test',
+          lastname: 'lastname',
+          email: 'email@email.com',
+          pnr: '123456789019',
+          username: 'testuser',
+          password: await generateHash('password123'),
+          role: 'applicant',
+        });
+        await User.create({
+          firstname: 'test',
+          lastname: 'lastname',
+          email: 'adminemail@email.com',
+          pnr: '123456789015',
+          username: 'admin',
+          password: await generateHash('admin'),
+          role: 'recruiter',
+        });
+        await Application.create({ applicantId: 1 });
+        //Date is invalid. Insert an "Availability" in the database manually.
+        /*await Availability.create({
+          from_date: '2023-05-01',
+          to_date: new Date('2023-06-01'),
+          applicationId: 1,
+        });*/
+        await Competence.create({
+          name: 'ticket sales',
+          years_of_experience: 2,
+          applicationId: 1,
+        });
+      });
     } else {
       await sequelize.sync();
     }
