@@ -5484,6 +5484,6 @@ INSERT INTO competences ("name",years_of_experience,"applicationId") VALUES
 	 ('roller coaster operation',2.50,900),
 	 ('ticket sales',1.20,900);
 ALTER SEQUENCE public.users_id_seq
-	RESTART 900;
+	RESTART 901;
 ALTER SEQUENCE public.applications_id_seq
-	RESTART 900;
+	RESTART 901;
