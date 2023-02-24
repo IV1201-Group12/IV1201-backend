@@ -1,6 +1,6 @@
 const authController = require('../../src/app/controllers/authController');
 const dbConfig = require('../../src/app/config/db-config');
-const request = require('supertest');
+const request = require('supertest')();
 const app = require('../../src/app/index.js');
 
 const pg_promise = require('pg-promise')();
@@ -9,13 +9,13 @@ beforeAll(async () => {
   database = await connectToDatabase();
 });
 
+afterAll(async () => {
+  return database.$pool.end();
+});
 beforeEach(async () => {
   await database.none(
     "INSERT INTO users (firstname, lastname, email, pnr, username, password, role) VALUES ('test', 'lastname', 'email@email.com', '123456789019', 'testuser', 'password123', 'applicant')",
   );
-});
-afterAll(async () => {
-  return database.$pool.end();
 });
 afterEach(async () => {
   await database.none("DELETE FROM users WHERE firstname='test'");
