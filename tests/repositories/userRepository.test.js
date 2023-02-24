@@ -9,10 +9,8 @@ beforeAll(async () => {
   database = await connectToDatabase();
 });
 afterAll(async () => {
-  return database.$pool.end();
-});
-afterEach(async () => {
   await database.none("DELETE FROM users WHERE firstname='test'");
+  return database.$pool.end();
 });
 
 const connectToDatabase = async () => {
@@ -49,7 +47,7 @@ describe('tests for register', () => {
     lastname: 'test',
     email: 'test@gmail.com',
     pnr: 'abcabcabcabc',
-    username: 'test11',
+    username: 'test1254',
     password: '12345test',
     role: 'applicant',
   };
@@ -75,9 +73,8 @@ describe('tests for register', () => {
       await userRepository.createUser(applicantPnrNumberNotNumeric);
       fail('An error was not thrown.');
     } catch (err) {
-      expect(err.message).toEqual(
-        'Validation error: Validation isNumeric on pnr failed',
-      );
+      console.log(err);
+      expect(err.message).toEqual('Validation error: Pnr is not valid');
     }
   });
   test('An error is thrown if person number is of the wrong length', async () => {
@@ -85,9 +82,7 @@ describe('tests for register', () => {
       await userRepository.createUser(applicantPnrNumberWrongLength);
       fail('An error was not thrown.');
     } catch (err) {
-      expect(err.message).toEqual(
-        'Validation error: Validation len on pnr failed',
-      );
+      expect(err.message).toEqual('Validation error: Pnr is not valid');
     }
   });
   test('An error is thrown if email is invalid', async () => {
@@ -95,9 +90,7 @@ describe('tests for register', () => {
       await userRepository.createUser(applicantEmailInvalid);
       fail('An error was not thrown.');
     } catch (err) {
-      expect(err.message).toEqual(
-        'Validation error: Validation isEmail on email failed',
-      );
+      expect(err.message).toEqual('Validation error: Email is not valid');
     }
   });
 });

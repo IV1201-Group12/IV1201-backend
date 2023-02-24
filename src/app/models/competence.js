@@ -1,3 +1,8 @@
+const { isValid } = require('../utils/validation');
+const {
+  isValidYearsOfExperiance,
+} = require('../validators/competenceValidators');
+
 module.exports = (sequelize, DataTypes) => {
   const Competence = sequelize.define(
     'competence',
@@ -13,6 +18,15 @@ module.exports = (sequelize, DataTypes) => {
       years_of_experience: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        validate: {
+          validate(value) {
+            isValid(
+              value,
+              isValidYearsOfExperiance,
+              'Years of experience is not valid',
+            );
+          },
+        },
       },
     },
     {

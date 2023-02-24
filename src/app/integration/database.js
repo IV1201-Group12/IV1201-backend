@@ -1,10 +1,20 @@
 const dbConfig = require('../config/db-config');
 const { Sequelize, DataTypes } = require('sequelize');
+const cls = require('cls-hooked');
 const defineApplicationModel = require('../models/application');
 const defineUserModel = require('../models/user');
 const defineAvailabilityModel = require('../models/availability');
 const defineCompetenceModel = require('../models/competence');
 
+/**
+ * Creates a namespace to enable automatic inclusion of queries in transactions.
+ */
+const namespace = cls.createNamespace('global');
+Sequelize.useCLS(namespace);
+
+/**
+ * Configures the Sequelize instance to be used by the application.
+ */
 let sequelize;
 
 // Instantiate Sequelize object with db configuration
@@ -29,13 +39,17 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-// Define models
+/**
+ * Defines the models for sequelize to use.
+ */
 const Application = defineApplicationModel(sequelize, DataTypes);
 const User = defineUserModel(sequelize, DataTypes);
 const Availability = defineAvailabilityModel(sequelize, DataTypes);
 const Competence = defineCompetenceModel(sequelize, DataTypes);
 
-// Define relationships
+/**
+ * Defines the associations between the models.
+ */
 // TODO: enforce that applications can only associate with a user model with role applicant
 User.hasMany(Application, { foreignKey: 'applicantId' });
 Application.belongsTo(User, { as: 'applicant' });
@@ -46,7 +60,9 @@ Competence.belongsTo(Application);
 Application.hasMany(Availability);
 Availability.belongsTo(Application);
 
-// Define exportable
+/**
+ * The object to be exported and used as an interface for other modules.
+ */
 const db = {
   sequelize: sequelize,
   models: {
@@ -57,10 +73,16 @@ const db = {
   },
 };
 
-// Start db connection
+/**
+ * Starts the connection with assigned configuration.
+ */
 (async () => {
   try {
-    await sequelize.sync();
+    if (process.env.NODE_ENV === 'acctest') {
+      await sequelize.sync({ force: true });
+    } else {
+      await sequelize.sync();
+    }
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {

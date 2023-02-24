@@ -8,7 +8,8 @@
     "citest": "jest --setupFiles dotenv/config --runInBand --detectOpenHandles --silent --verbose --coverage",
     "lint": "eslint ./src --ext .js,.jsx --no-fix --max-warnings 0",
     "start": " node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "acctest": "set NODE_ENV=acctest&& nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/IV1201-Group12/IV1201-backend#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cls-hooked": "^4.2.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
