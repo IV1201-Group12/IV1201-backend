@@ -1,10 +1,18 @@
 const authController = require('../../src/app/controllers/authController');
 const dbConfig = require('../../src/app/config/db-config');
+const request = require('supertest');
+const app = require('../../src/app/index.js');
 
 const pg_promise = require('pg-promise')();
 
 beforeAll(async () => {
   database = await connectToDatabase();
+});
+
+beforeEach(async () => {
+  await database.none(
+    "INSERT INTO users (firstname, lastname, email, pnr, username, password, role) VALUES ('test', 'lastname', 'email@email.com', '123456789019', 'testuser', 'password123', 'applicant')",
+  );
 });
 afterAll(async () => {
   return database.$pool.end();
@@ -64,4 +72,33 @@ describe('tests for register', () => {
   //   await authController.register(reqEmailInvalid, res, null);
   //   expect(res.message).toEqual('Email is not valid');
   // });
+});
+
+describe('tests for login', () => {
+  it('should return a 401 status code if user does not exist', async () => {
+    const res = await request(app)
+      .post('/auth/login')
+      .send({ username: 'nonexistinguser', password: 'password123' });
+    expect(res.statusCode).toBe(401);
+    expect(res.text).toBe('No user with those credentials');
+  });
+
+  it('should return a 401 status code if password is incorrect', async () => {
+    const res = await request(app)
+      .post('/auth/login')
+      .send({ username: 'testuser', password: 'wrongpassword' });
+
+    expect(res.statusCode).toBe(401);
+    expect(res.text).toBe('No user with those credentials');
+  });
+
+  it('should set a cookie and return user info if login is successful', async () => {
+    const res = await request(app)
+      .post('/auth/login')
+      .send({ username: 'testuser', password: 'password123' });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual({ username: 'testuser', role: 'applicant' });
+    expect(res.headers['set-cookie']).toContain('ACCESSTOKEN');
+  });
 });
