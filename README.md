@@ -1,6 +1,6 @@
 # IV1201-backend
 
-This repository contains the code for the recruitment application.
+This repository contains backend the code for the recruitment application.
 
 ## How to run
 
@@ -15,6 +15,10 @@ Node and npm must be installed on the local system.
 - Create an empty database that can be reached from the local machine. PostgreSQL is the preferred database since that is what's been tested but other databases may work.
 - The program uses a couple of environment variables which are described in the .env-template file. Create a file called .env in the same directory and copy the contents of the template over to this file. Then fill in the values for every variable.
 - Make sure the database is up and running and then start the backend using one of the scripts defined in package.json. For example: <pre><code>npm run dev</code></pre> to run the backend in a development context.
+
+## Testing
+
+The code is unit tested using the Jest framework. The testing structure mirrors the applications structure in the the tests directory.
 
 ## Design
 
@@ -61,3 +65,7 @@ This layer contains functions for validating input data for the application and 
 #### Utils
 
 This is a layer that contains utility/helper functions, e.g. encryption and token generation and verification.
+
+#### Config
+
+This layer contains application wide configuration values.
