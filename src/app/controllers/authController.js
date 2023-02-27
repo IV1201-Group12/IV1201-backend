@@ -8,6 +8,12 @@ const { generateToken } = require('../utils/jwt');
 const { ValidationError } = require('sequelize');
 
 module.exports = {
+  /**
+   * An asynchronous function that registers a new user.
+   * Sets the role of the new user to 'applicant'.
+   * @param {*} req The HTTP request object.
+   * @param {*} res The HTTP response object.
+   */
   register: async (req, res) => {
     req.body.role = 'applicant';
     try {
@@ -21,6 +27,14 @@ module.exports = {
     }
     res.status(201).send();
   },
+  /**
+   * An asynchronous function that logs a user in.
+   * If the user does not exist, returns a 401 Unauthorized response.
+   * Generates a token for the user using the generateToken function.
+   * @param {*} req The HTTP request object.
+   * @param {*} res The HTTP response object.
+   * @returns 200 OK response with the user's username and role in JSON format.
+   */
   login: async (req, res) => {
     const { username, password } = req.body;
     const existingUser = await userRepository.getExistingUser(username);
@@ -37,6 +51,11 @@ module.exports = {
       .status(200)
       .json({ username: existingUser.username, role: existingUser.role });
   },
+  /**
+   * Logs the user out by setting the access token cookie to 'none'.
+   * @param {*} req The HTTP request object.
+   * @param {*} res The HTTP response object.
+   */
   logout: async (req, res) => {
     res.cookie('ACCESSTOKEN', 'none', cookieConfigLogout());
     res.status(200).json({ message: 'Logged out' });
