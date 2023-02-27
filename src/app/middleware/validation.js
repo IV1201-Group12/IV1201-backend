@@ -1,5 +1,6 @@
 const Validators = require('../validators/userValidators');
 
+//Se till att skicka samma strings som i modellagrets felmeddelanden så borde frontend funka
 module.exports = {
   validateRegister: (req, res, next) => {
     try {
