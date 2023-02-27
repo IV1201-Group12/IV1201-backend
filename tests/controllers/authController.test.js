@@ -59,6 +59,7 @@ describe('tests for register', () => {
     },
   };
   test('A new account is created successfully', async () => {
+    //
     // await authController.register(reqCorrect, res, null);
     // expect(res.statusCode).toEqual(201);
   });
