@@ -102,11 +102,11 @@ const db = {
         });
         await Application.create({ applicantId: 1 });
         //Date is invalid. Insert an "Availability" in the database manually.
-        /*await Availability.create({
-          from_date: '2023-05-01',
-          to_date: new Date('2023-06-01'),
+        await Availability.create({
+          from_date: '2022-05-01 00:00:00',
+          to_date: '2022-06-01 00:00:00',
           applicationId: 1,
-        });*/
+        });
         await Competence.create({
           name: 'ticket sales',
           years_of_experience: 2,
