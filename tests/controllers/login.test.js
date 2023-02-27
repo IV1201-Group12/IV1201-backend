@@ -24,7 +24,7 @@ describe('login', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
+  //
   it('should return a 401 status code if user does not exist', async () => {
     // userRepository.getExistingUser = jest.fn().mockResolvedValue(null);
     // const res = await request(authRoute)
