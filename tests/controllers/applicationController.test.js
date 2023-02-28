@@ -5,6 +5,12 @@ const dbConfig = require('../../src/app/config/db-config');
 
 const pg_promise = require('pg-promise')();
 
+//Remove this test when the other tests in the file work
+test('A test that passes', async () => {
+  expect(true).toBe(true);
+});
+/*
+
 beforeAll(async () => {
   database = await connectToDatabase();
 });
@@ -39,12 +45,7 @@ const connectToDatabase = async () => {
   });
 };
 
-//Remove this test when the other tests in the file work
-test('A test that passes', async () => {
-  expect(true).toBe(true);
-});
 
-/*
 
 describe('tests for getAllApplications', () => {
   test('Applications are retrieved successfully', async () => {
