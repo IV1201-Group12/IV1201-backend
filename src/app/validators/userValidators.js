@@ -4,6 +4,7 @@ module.exports = {
   },
 
   isValidName(value) {
+    if (!value) return false;
     return value.length > 1;
   },
 
