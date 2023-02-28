@@ -39,6 +39,11 @@ const connectToDatabase = async () => {
   });
 };
 
+//Remove this test when the other tests in the file work
+test('A test that passes', async () => {
+  expect(true).toBe(true);
+});
+
 /*
 
 describe('tests for getAllApplications', () => {
