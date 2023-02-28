@@ -4,6 +4,7 @@ module.exports = {
   },
 
   isValidName(value) {
+    if (!value) return false;
     return value.length > 1;
   },
 
@@ -25,10 +26,12 @@ module.exports = {
   },
 
   isValidUsername(value) {
+    if (!value) return false;
     return value.length > 3;
   },
 
   isValidPassword(value) {
+    if (!value) return false;
     return value.length > 3;
   },
 };
