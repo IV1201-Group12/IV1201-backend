@@ -1,3 +1,7 @@
+/**
+ * Defines the application model including constraints and validation.
+ */
+
 const { isValid } = require('../utils/validation');
 const { isValidVersion } = require('../validators/applicationValidators');
 

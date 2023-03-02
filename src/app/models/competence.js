@@ -1,3 +1,7 @@
+/**
+ * Defines the competence model including constraints and validation.
+ */
+
 const { isValid } = require('../utils/validation');
 const {
   isValidYearsOfExperiance,
@@ -16,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       years_of_experience: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false,
         validate: {
           validate(value) {

@@ -22,17 +22,17 @@ const connectToDatabase = async () => {
   });
 };
 
-describe('tests for register', () => {
-  const applicantCorrect = {
-    firstname: 'test',
-    lastname: 'test',
-    email: 'test@gmail.com',
-    pnr: '123456789012',
-    username: 'test',
-    password: '12345test',
-    role: 'applicant',
-  };
+const applicantCorrect = {
+  firstname: 'test',
+  lastname: 'test',
+  email: 'test@gmail.com',
+  pnr: '123456789012',
+  username: 'test',
+  password: '12345test',
+  role: 'applicant',
+};
 
+describe('tests for register', () => {
   const applicantPnrNumberWrongLength = {
     firstname: 'test',
     lastname: 'test',
@@ -73,7 +73,6 @@ describe('tests for register', () => {
       await userRepository.createUser(applicantPnrNumberNotNumeric);
       fail('An error was not thrown.');
     } catch (err) {
-      console.log(err);
       expect(err.message).toEqual('Validation error: Pnr is not valid');
     }
   });
@@ -93,4 +92,16 @@ describe('tests for register', () => {
       expect(err.message).toEqual('Validation error: Email is not valid');
     }
   });
+});
+describe('tests for getExistingUser', () => {
+  it('should return null if user does not exist', async () => {
+    const existingUser = await userRepository.getExistingUser('nonexistent');
+    expect(existingUser).toBeNull();
+  });
+
+  /*  it('should return the user if it exists', async () => {
+    const existingUser = await userRepository.getExistingUser('test');
+    expect(existingUser).toEqual(applicantCorrect);
+  });
+  */
 });

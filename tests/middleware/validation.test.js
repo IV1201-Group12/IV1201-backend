@@ -102,7 +102,7 @@ describe('tests for validateRegister', () => {
 
   test('An error is thrown if person number is invalid', () => {
     validateRegister(reqPnrNumberInvalid, res, null);
-    expect(res.message).toEqual('Person number is not valid');
+    expect(res.message).toEqual('Pnr is not valid');
     expect(res.statusCode).toEqual(400);
   });
 
@@ -114,13 +114,13 @@ describe('tests for validateRegister', () => {
 
   test('An error is thrown if first name is invalid', () => {
     validateRegister(reqFirstnameInvalid, res, null);
-    expect(res.message).toEqual('Name is not valid');
+    expect(res.message).toEqual('Firstname is not valid');
     expect(res.statusCode).toEqual(400);
   });
 
   test('An error is thrown if last name is invalid', () => {
     validateRegister(reqLastnameInvalid, res, null);
-    expect(res.message).toEqual('Surname is not valid');
+    expect(res.message).toEqual('Lastname is not valid');
     expect(res.statusCode).toEqual(400);
   });
 

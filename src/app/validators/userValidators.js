@@ -1,9 +1,13 @@
+/**
+ * This module exports validator functions for the user model.
+ */
 module.exports = {
   isString(value) {
     return typeof value === 'string';
   },
 
   isValidName(value) {
+    if (!value) return false;
     return value.length > 1;
   },
 
@@ -25,10 +29,12 @@ module.exports = {
   },
 
   isValidUsername(value) {
+    if (!value) return false;
     return value.length > 3;
   },
 
   isValidPassword(value) {
+    if (!value) return false;
     return value.length > 3;
   },
 };
