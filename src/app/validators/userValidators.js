@@ -1,3 +1,6 @@
+/**
+ * This module exports validator functions for the user model.
+ */
 module.exports = {
   isString(value) {
     return typeof value === 'string';

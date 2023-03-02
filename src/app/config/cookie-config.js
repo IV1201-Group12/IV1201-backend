@@ -1,6 +1,7 @@
 /**
  * The cookie configurations used for the authentication cookies.
  */
+
 module.exports = {
   /**
    * Function that returns the cookie configurations for the login cookie.

@@ -1,3 +1,10 @@
+/**
+ * This module sets up the integration with the database using sequelize.
+ * It creates all models and their associations and configures the connection
+ * for sequelize to use. Finally it starts the connection and exports an object
+ * with models and the sequelize object itself for other modules to use as an interface.
+ */
+
 const dbConfig = require('../config/db-config');
 const { Sequelize, DataTypes } = require('sequelize');
 const cls = require('cls-hooked');
@@ -18,7 +25,7 @@ Sequelize.useCLS(namespace);
  */
 let sequelize;
 
-// Instantiate Sequelize object with db configuration
+// TODO: Instantiate Sequelize object with db configuration
 // temp fix to get production up
 if (process.env.NODE_ENV === 'production') {
   sequelize = new Sequelize(process.env.DATABSE_URL, {

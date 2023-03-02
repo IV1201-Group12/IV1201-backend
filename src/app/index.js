@@ -1,3 +1,9 @@
+/**
+ * This module imports the express library and does all initial
+ * configuration to it. It configures top level middleware and routes
+ * to use.
+ */
+
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -15,6 +21,10 @@ app.get('/', (req, res) => {
   return res.send('Hello');
 });
 
+/**
+ * This piece of code sets up the routes of the application.
+ * Route-specific middleware can be attached here.
+ */
 app.use('/auth', require('./routes/authRoute'));
 app.use(
   '/applications',

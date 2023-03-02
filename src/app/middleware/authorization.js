@@ -1,8 +1,9 @@
-const { verifyToken } = require('../utils/jwt');
-
 /**
  * Middleware used for authorizing a request.
  */
+
+const { verifyToken } = require('../utils/jwt');
+
 module.exports = {
   /**
    * Extracts the token from the ACCESSTOKEN cookie, verifies that it is valid,
