@@ -65,7 +65,7 @@ module.exports = {
     try {
       if (!applicationValidators.isValidStatus(req.body.status))
         throw new Error('Status is not valid');
-      if (!applicationValidators.isValidVersion(req.body.status))
+      if (!applicationValidators.isValidVersion(req.body.version))
         throw new Error('Status is not valid');
       return next();
     } catch (err) {
