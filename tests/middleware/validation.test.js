@@ -1,6 +1,7 @@
 const {
   validateRegister,
   validateLogin,
+  validateChangeStatusOfApplication,
 } = require('../../src/app/middleware/validation');
 
 describe('tests for validateRegister', () => {
@@ -180,6 +181,78 @@ describe('tests for validateLogin', () => {
   test('An error is thrown if no password is included', () => {
     validateLogin(reqPasswordInvalid, res, next);
     expect(res.message).toEqual('Enter a password');
+    expect(res.statusCode).toEqual(400);
+  });
+});
+
+describe('tests for validateChangeStatusOfApplication', () => {
+  const reqValid = {
+    body: {
+      status: 'accepted',
+      version: 1,
+    },
+  };
+  const reqStatusMissing = {
+    body: {
+      version: 1,
+    },
+  };
+  const reqStatusInvalid = {
+    body: {
+      status: 'notastatus',
+      version: 1,
+    },
+  };
+  const reqVersionMissing = {
+    body: {
+      status: 'accepted',
+    },
+  };
+  const reqVersionInvalid = {
+    body: {
+      status: 'accepted',
+      version: 0,
+    },
+  };
+
+  const res = {
+    statusCode: null,
+    message: null,
+
+    status: (value) => {
+      res.statusCode = value;
+      return {
+        send: (message) => {
+          res.message = message;
+        },
+      };
+    },
+  };
+
+  const next = jest.fn();
+
+  test('Next is called if the request is valid', () => {
+    validateChangeStatusOfApplication(reqValid, res, next);
+    expect(next).toHaveBeenCalled();
+  });
+  test('An error is thrown if no status is not included', () => {
+    validateChangeStatusOfApplication(reqStatusMissing, res, next);
+    expect(res.message).toEqual('Status is not valid');
+    expect(res.statusCode).toEqual(400);
+  });
+  test('An error is thrown if no status is not valid', () => {
+    validateChangeStatusOfApplication(reqStatusInvalid, res, next);
+    expect(res.message).toEqual('Status is not valid');
+    expect(res.statusCode).toEqual(400);
+  });
+  test('An error is thrown if no version is not included', () => {
+    validateChangeStatusOfApplication(reqVersionMissing, res, next);
+    expect(res.message).toEqual('Version is not valid');
+    expect(res.statusCode).toEqual(400);
+  });
+  test('An error is thrown if no version is not valid', () => {
+    validateChangeStatusOfApplication(reqVersionInvalid, res, next);
+    expect(res.message).toEqual('Version is not valid');
     expect(res.statusCode).toEqual(400);
   });
 });
