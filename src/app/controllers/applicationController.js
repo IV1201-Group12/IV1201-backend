@@ -1,3 +1,8 @@
+/**
+ * This module exports an object containing all the controller functions that handle
+ * endpoints related to applications.
+ */
+
 const applicationRepository = require('../repositories/applicationRepository');
 
 module.exports = {
@@ -22,7 +27,7 @@ module.exports = {
   },
 
   /**
-  An asynchronous function that retrieves a single application by its ID from the application repository 
+  An asynchronous function that retrieves a single application by its ID from the application repository
   using the findApplicationById method and returns it as a JSON response.
   If an error occurs during the process, the function returns a 500 Internal Server Error response.
   @param {*} req The HTTP request object.

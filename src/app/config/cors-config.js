@@ -1,6 +1,7 @@
 /**
  * The CORS options used to enable cross-site requests.
  */
+
 module.exports = {
   /**
    * Function that returns the CORS options depending on the environment.

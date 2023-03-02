@@ -1,3 +1,8 @@
+/**
+ * This module exports an object containing all the controller functions that handle
+ * endpoints related to authentication.
+ */
+
 const userRepository = require('../repositories/userRepository');
 const {
   cookieConfigLogin,

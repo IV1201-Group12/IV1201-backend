@@ -1,3 +1,6 @@
+/**
+ * This module exports validator functions for the application model.
+ */
 module.exports = {
   isValidVersion(value) {
     return value > 0;

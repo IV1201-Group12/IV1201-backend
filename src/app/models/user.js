@@ -1,3 +1,7 @@
+/**
+ * Defines the user model including constraints and validation.
+ */
+
 const { isValid } = require('../utils/validation');
 const {
   isValidPnr,
