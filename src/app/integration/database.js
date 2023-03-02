@@ -25,8 +25,10 @@ Sequelize.useCLS(namespace);
  */
 let sequelize;
 
-// TODO: Instantiate Sequelize object with db configuration
-// temp fix to get production up
+/**
+ * Instantiate Sequelize object with db configuration
+ */
+// TODO: temp fix to get production up
 if (process.env.NODE_ENV === 'production') {
   sequelize = new Sequelize(process.env.DATABSE_URL, {
     dialect: 'postgres',
@@ -58,7 +60,6 @@ const Competence = defineCompetenceModel(sequelize, DataTypes);
 /**
  * Defines the associations between the models.
  */
-// TODO: enforce that applications can only associate with a user model with role applicant
 User.hasMany(Application, { foreignKey: 'applicantId' });
 Application.belongsTo(User, { as: 'applicant' });
 

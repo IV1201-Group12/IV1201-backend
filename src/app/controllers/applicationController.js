@@ -18,10 +18,8 @@ module.exports = {
   getAllApplications: async (req, res) => {
     try {
       const applications = await applicationRepository.findAllApplications();
-      res.json(applications);
       return res.json(applications);
     } catch (err) {
-      res.status(500).send(err);
       return res.status(500).send(err);
     }
   },
@@ -40,10 +38,8 @@ module.exports = {
       const application = await applicationRepository.findApplicationById(
         req.params.id,
       );
-      res.json(application);
       return res.json(application);
     } catch (err) {
-      res.status(500).send(err);
       return res.status(500).send(err);
     }
   },
@@ -67,7 +63,6 @@ module.exports = {
         req.body.version,
         req.body.id,
       );
-      res.status(200).send();
       return res.status(200).send();
     } catch (err) {
       if (err === 'version mismatch')
