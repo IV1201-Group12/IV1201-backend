@@ -1,6 +1,7 @@
 const {
   validateRegister,
   validateLogin,
+  validateChangeStatusOfApplication,
 } = require('../../src/app/middleware/validation');
 
 describe('tests for validateRegister', () => {
