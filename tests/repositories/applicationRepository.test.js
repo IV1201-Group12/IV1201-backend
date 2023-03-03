@@ -7,6 +7,7 @@ let database;
 
 beforeAll(async () => {
   database = await connectToDatabase();
+  await require('../../src/app/integration/database').init();
   const status = "'accepted'";
   await database.none(
     "insert into users values (9999, 'test', 'test', 'testtt@gmail.com', '098765432112', 'testusername', 'testpassword', 'applicant')",
