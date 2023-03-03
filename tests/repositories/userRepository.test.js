@@ -7,6 +7,7 @@ let database;
 
 beforeAll(async () => {
   database = await connectToDatabase();
+  await require('../../src/app/integration/database').init();
 });
 afterAll(async () => {
   await database.none("DELETE FROM users WHERE firstname='test'");

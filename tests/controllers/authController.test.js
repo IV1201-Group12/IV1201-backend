@@ -5,12 +5,11 @@ const app = require('../../src/app/index.js');
 const { generateHash } = require('../../src/app/utils/bcrypt');
 
 const pg_promise = require('pg-promise')();
-const db = require('../../src/app/integration/database');
 let database;
 
 beforeAll(async () => {
   database = await connectToDatabase();
-  await db.init();
+  await require('../../src/app/integration/database').init();
 });
 
 beforeEach(async () => {
