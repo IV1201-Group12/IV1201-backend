@@ -2,11 +2,12 @@ const applicationController = require('../../src/app/controllers/applicationCont
 const applicationRepository = require('../../src/app/repositories/applicationRepository');
 
 const dbConfig = require('../../src/app/config/db-config');
-
+const db = require('../../src/app/integration/database');
 const pg_promise = require('pg-promise')();
 
 beforeAll(async () => {
   database = await connectToDatabase();
+  await db.init();
 });
 afterAll(async () => {
   return database.$pool.end();

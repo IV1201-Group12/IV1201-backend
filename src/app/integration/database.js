@@ -80,55 +80,54 @@ const db = {
     Availability: Availability,
     Competence: Competence,
   },
-};
-
-/**
- * Starts the connection with assigned configuration.
- */
-(async () => {
-  try {
-    if (process.env.NODE_ENV === 'acctest') {
-      await sequelize.sync({ force: true });
-      await sequelize.transaction(async () => {
-        await User.create({
-          firstname: 'test',
-          lastname: 'lastname',
-          email: 'email@email.com',
-          pnr: '123456789019',
-          username: 'testuser',
-          password: await generateHash('password123'),
-          role: 'applicant',
+  /**
+   * Starts the connection with assigned configuration.
+   */
+  async init() {
+    try {
+      if (process.env.NODE_ENV === 'acctest') {
+        await sequelize.sync({ force: true });
+        await sequelize.transaction(async () => {
+          await User.create({
+            firstname: 'test',
+            lastname: 'lastname',
+            email: 'email@email.com',
+            pnr: '123456789019',
+            username: 'testuser',
+            password: await generateHash('password123'),
+            role: 'applicant',
+          });
+          await User.create({
+            firstname: 'test',
+            lastname: 'lastname',
+            email: 'adminemail@email.com',
+            pnr: '123456789015',
+            username: 'admin',
+            password: await generateHash('admin'),
+            role: 'recruiter',
+          });
+          await Application.create({ applicantId: 1 });
+          //Date is invalid. Insert an "Availability" in the database manually.
+          await Availability.create({
+            from_date: '2022-05-01 00:00:00',
+            to_date: '2022-06-01 00:00:00',
+            applicationId: 1,
+          });
+          await Competence.create({
+            name: 'ticket sales',
+            years_of_experience: 2,
+            applicationId: 1,
+          });
         });
-        await User.create({
-          firstname: 'test',
-          lastname: 'lastname',
-          email: 'adminemail@email.com',
-          pnr: '123456789015',
-          username: 'admin',
-          password: await generateHash('admin'),
-          role: 'recruiter',
-        });
-        await Application.create({ applicantId: 1 });
-        //Date is invalid. Insert an "Availability" in the database manually.
-        await Availability.create({
-          from_date: '2022-05-01 00:00:00',
-          to_date: '2022-06-01 00:00:00',
-          applicationId: 1,
-        });
-        await Competence.create({
-          name: 'ticket sales',
-          years_of_experience: 2,
-          applicationId: 1,
-        });
-      });
-    } else {
-      await sequelize.sync();
+      } else {
+        await sequelize.sync();
+      }
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
     }
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-})();
+  },
+};
 
 module.exports = db;
