@@ -32,4 +32,26 @@ module.exports = {
       return await User.findOne({ where: { username: username } });
     });
   },
+
+  /**
+   * Finds a user object with a given id.
+   * @param {*} id The given id.
+   * @returns The user object, without the password, if it exists. Null if it does not exist.
+   */
+  findUserById: async (id) => {
+    return await sequelize.transaction(async () => {
+      return await User.findOne({
+        where: { id },
+        attributes: [
+          'id',
+          'firstname',
+          'lastname',
+          'email',
+          'pnr',
+          'username',
+          'role',
+        ],
+      });
+    });
+  },
 };

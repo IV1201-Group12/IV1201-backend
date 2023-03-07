@@ -98,7 +98,7 @@ const db = {
             role: 'applicant',
           });
           await User.create({
-            firstname: 'test2',
+            firstname: 'test',
             lastname: 'lastname2',
             email: 'email2@email.com',
             pnr: '123456789018',

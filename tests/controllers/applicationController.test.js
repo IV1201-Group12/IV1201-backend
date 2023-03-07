@@ -3,6 +3,7 @@ const applicationRepository = require('../../src/app/repositories/applicationRep
 
 const dbConfig = require('../../src/app/config/db-config');
 const pg_promise = require('pg-promise')();
+let database;
 
 beforeAll(async () => {
   database = await connectToDatabase();
@@ -14,21 +15,19 @@ afterAll(async () => {
 beforeEach(async () => {
   const status = "'accepted'";
   await database.none(
-    "insert into users values (9999, 'test', 'test', 'testtt@gmail.com', '098765432112', 'testusername', 'testpassword', 'applicant')",
+    "insert into users values (9001, 'testappcont', 'testappcont', 'testappcont@gmail.com', '098765432112', 'testappcont', 'testappcont', 'applicant')",
   );
   await database.none(
     'insert into applications (status, "applicantId") values (' +
       status +
-      ', 9999)',
+      ', 9001)',
   );
 });
 
 afterEach(async () => {
-  await database.none('DELETE FROM applications WHERE "applicantId"=9999');
-  await database.none("DELETE from users WHERE id='9999'");
+  await database.none('DELETE FROM applications WHERE "applicantId"=9001');
+  await database.none("DELETE from users WHERE id='9001'");
 });
-
-let database;
 
 const connectToDatabase = async () => {
   return pg_promise({
