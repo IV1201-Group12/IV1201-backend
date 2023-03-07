@@ -47,6 +47,10 @@ describe('tests for findApplicationById', () => {
     expect(application.status).toBe('accepted');
     expect(application.applicant.email).toBe('testtt@gmail.com');
   });
+  it('should return null if an application with the given id does not exist', async () => {
+    const application = await applicationRepository.findApplicationById(99999);
+    expect(application).toBe(null);
+  });
 });
 
 describe('tests for updateStatus', () => {

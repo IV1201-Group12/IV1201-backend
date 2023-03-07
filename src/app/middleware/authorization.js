@@ -27,7 +27,7 @@ module.exports = {
         if (!role.includes(req.role)) return res.status(403).send('Wrong role');
         return next();
       } catch (err) {
-        return res.status(401).send(err);
+        return res.status(401).send(err.message);
       }
     };
   },

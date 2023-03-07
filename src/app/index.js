@@ -33,5 +33,10 @@ app.use(
   authorizeRequest(['recruiter']),
   require('./routes/applicationRoute'),
 );
+app.use(
+  '/users',
+  authorizeRequest(['recruiter']),
+  require('./routes/userRoute'),
+);
 
 module.exports = app;

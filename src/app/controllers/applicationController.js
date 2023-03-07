@@ -2,7 +2,10 @@
  * This module exports an object containing all the controller functions that handle
  * endpoints related to applications.
  */
-
+const {
+  insertApplicantLink,
+  insertApplicantLinks,
+} = require('../utils/hateoas');
 const applicationRepository = require('../repositories/applicationRepository');
 
 module.exports = {
@@ -18,6 +21,8 @@ module.exports = {
   getAllApplications: async (req, res) => {
     try {
       const applications = await applicationRepository.findAllApplications();
+      // console.log(JSON.parse(applications));
+      insertApplicantLinks(applications);
       return res.json(applications);
     } catch (err) {
       return res.status(500).send(err);
@@ -38,6 +43,7 @@ module.exports = {
       const application = await applicationRepository.findApplicationById(
         req.params.id,
       );
+      insertApplicantLink(application);
       return res.json(application);
     } catch (err) {
       return res.status(500).send(err);

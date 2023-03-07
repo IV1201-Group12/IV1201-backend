@@ -13,16 +13,17 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  const password = await generateHash('password123');
+  const pass = await generateHash('password123');
   await database.none(
-    `INSERT INTO users (firstname, lastname, email, pnr, username, password, role) VALUES ('jtest', 'lastname', 'email@email.com', '123456789019', 'testuser', '${password}', 'applicant')`,
+    `insert into users values (9002, 'testauthcont', 'testauthcont', 'testauthcont@gmail.com', '098765432112', 'testauthcont', '${pass}', 'applicant')`,
+
   );
 });
 afterAll(async () => {
   return database.$pool.end();
 });
 afterEach(async () => {
-  await database.none('DELETE FROM users');
+  await database.none("DELETE FROM users where id='9002'");
 });
 
 const connectToDatabase = async () => {
@@ -77,16 +78,16 @@ describe('tests for login', () => {
   it('should return a 401 status code if password is incorrect', async () => {
     const res = await request(app)
       .post('/auth/login')
-      .send({ username: 'testuser', password: 'wrongpassword' });
+      .send({ username: 'testauthcont', password: 'wrongpassword' });
     expect(res.statusCode).toBe(401);
     expect(res.text).toBe('No user with those credentials');
   });
   it('should set a cookie and return user info if login is successful', async () => {
     const res = await request(app)
       .post('/auth/login')
-      .send({ username: 'testuser', password: 'password123' });
+      .send({ username: 'testauthcont', password: 'password123' });
     expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual({ username: 'testuser', role: 'applicant' });
+    expect(res.body).toEqual({ username: 'testauthcont', role: 'applicant' });
     expect(
       res.headers['set-cookie'].find((item) => item.includes('ACCESSTOKEN')) !=
         undefined,

@@ -99,6 +99,15 @@ const db = {
           });
           await User.create({
             firstname: 'test',
+            lastname: 'lastname2',
+            email: 'email2@email.com',
+            pnr: '123456789018',
+            username: 'testuser2',
+            password: await generateHash('password1234'),
+            role: 'applicant',
+          });
+          await User.create({
+            firstname: 'test',
             lastname: 'lastname',
             email: 'adminemail@email.com',
             pnr: '123456789015',
@@ -107,16 +116,26 @@ const db = {
             role: 'recruiter',
           });
           await Application.create({ applicantId: 1 });
-          //Date is invalid. Insert an "Availability" in the database manually.
           await Availability.create({
-            from_date: '2022-05-01 00:00:00',
-            to_date: '2022-06-01 00:00:00',
+            from_date: '2024-05-01 00:00:00',
+            to_date: '2024-06-01 00:00:00',
             applicationId: 1,
           });
           await Competence.create({
             name: 'ticket sales',
             years_of_experience: 2,
             applicationId: 1,
+          });
+          await Application.create({ applicantId: 2 });
+          await Availability.create({
+            from_date: '2024-05-01 00:00:00',
+            to_date: '2024-06-01 00:00:00',
+            applicationId: 2,
+          });
+          await Competence.create({
+            name: 'ticket sales',
+            years_of_experience: 2,
+            applicationId: 2,
           });
         });
       } else {
