@@ -13,10 +13,9 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  const password = await generateHash('password123');
   await database.none(
-    `INSERT INTO users (firstname, lastname, email, pnr, username, password, role) VALUES ('jtest', 'lastname', 'email@email.com', '123456789019', 'testuser', '${await generateHash(
-      'password123',
-    )}', 'applicant')`,
+    `INSERT INTO users (firstname, lastname, email, pnr, username, password, role) VALUES ('jtest', 'lastname', 'email@email.com', '123456789019', 'testuser', '${password}', 'applicant')`,
   );
 });
 afterAll(async () => {
