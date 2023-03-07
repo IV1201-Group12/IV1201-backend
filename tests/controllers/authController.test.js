@@ -15,8 +15,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   const pass = await generateHash('password123');
   await database.none(
-    `insert into users values (9002, 'testauthcont', 'testauthcont', 'testauthcont@gmail.com', '098765432112', 'testauthcont', '${pass}', 'applicant')`,
-
+    `insert into users values (9002, 'testauthcont', 'testauthcont', 'testauthcont@gmail.com', '111111111112', 'testauthcont', '${pass}', 'applicant')`,
   );
 });
 afterAll(async () => {
@@ -24,6 +23,9 @@ afterAll(async () => {
 });
 afterEach(async () => {
   await database.none("DELETE FROM users where id='9002'");
+  await database.none(
+    "DELETE FROM users where firstname='testregisterauthcont'",
+  );
 });
 
 const connectToDatabase = async () => {
@@ -38,11 +40,11 @@ const connectToDatabase = async () => {
 describe('tests for register', () => {
   const reqCorrect = {
     body: {
-      firstname: 'test',
-      lastname: 'test',
-      email: 'test@gmail.com',
-      pnr: '123456789018',
-      username: 'test',
+      firstname: 'testregisterauthcont',
+      lastname: 'testregisterauthcont',
+      email: 'testregisterauthcont@gmail.com',
+      pnr: '111111111113',
+      username: 'testregisterauthcont',
       password: '12345test',
       role: 'applicant',
     },

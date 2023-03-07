@@ -15,7 +15,7 @@ afterAll(async () => {
 beforeEach(async () => {
   const status = "'accepted'";
   await database.none(
-    "insert into users values (9001, 'testappcont', 'testappcont', 'testappcont@gmail.com', '098765432112', 'testappcont', 'testappcont', 'applicant')",
+    "insert into users values (9001, 'testappcont', 'testappcont', 'testappcont@gmail.com', '111111111111', 'testappcont', 'testappcont', 'applicant')",
   );
   await database.none(
     'insert into applications (status, "applicantId") values (' +
