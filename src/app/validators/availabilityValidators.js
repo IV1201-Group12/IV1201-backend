@@ -3,7 +3,13 @@
  */
 module.exports = {
   isValidDate(value) {
-    if (value.setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0)) {
+    const innerIsValidDate = (input) => {
+      return new Date(input).toString !== 'Invalid Date';
+    };
+    if (!innerIsValidDate(value)) return false;
+    if (
+      new Date(value).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0)
+    ) {
       return false;
     }
     return true;

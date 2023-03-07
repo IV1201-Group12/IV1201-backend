@@ -24,7 +24,7 @@ module.exports = {
           {
             model: User,
             as: 'applicant',
-            attributes: ['firstname', 'lastname'],
+            attributes: ['firstname', 'lastname', 'id'],
           },
         ],
       });
@@ -44,7 +44,7 @@ module.exports = {
           {
             model: User,
             as: 'applicant',
-            attributes: ['firstname', 'lastname', 'email', 'pnr'],
+            attributes: ['firstname', 'lastname', 'email', 'pnr', 'id'],
           },
           {
             model: Competence,

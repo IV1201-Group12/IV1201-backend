@@ -6,7 +6,6 @@
 const userValidators = require('../validators/userValidators');
 const applicationValidators = require('../validators/applicationValidators');
 
-// TODO: Se till att skicka samma strings som i modellagrets felmeddelanden så borde frontend funka
 module.exports = {
   /**
    * Validates the user defined data sent to the register endpoint.
