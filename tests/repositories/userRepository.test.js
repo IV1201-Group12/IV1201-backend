@@ -9,7 +9,7 @@ beforeAll(async () => {
   database = await connectToDatabase();
   await require('../../src/app/integration/database').init();
   await database.none(
-    "insert into users values (9005, 'testuserrepo', 'testuserrepo', 'testuserrepo@gmail.com', '111111111111', 'testuserrepo', 'testuserrepo', 'applicant')",
+    "insert into users values (9005, 'testuserrepo', 'testuserrepo', 'testuserrepo@gmail.com', '111111111122', 'testuserrepo', 'testuserrepo', 'applicant')",
   );
 });
 afterAll(async () => {
@@ -31,7 +31,7 @@ const applicantCorrect = {
   firstname: 'testregister',
   lastname: 'testregister',
   email: 'testregister@gmail.com',
-  pnr: '111111111112',
+  pnr: '111111111123',
   username: 'testregister',
   password: 'testregister',
   role: 'applicant',
@@ -61,7 +61,7 @@ describe('tests for register', () => {
     firstname: 'test',
     lastname: 'test',
     email: 'testgmaicom',
-    pnr: '123456789012',
+    pnr: '111111111124',
     username: 'test',
     password: '12345test',
     role: 'applicant',
@@ -109,7 +109,7 @@ describe('tests for getExistingUser', () => {
     expect(existingUser.firstname).toEqual('testuserrepo');
     expect(existingUser.lastname).toEqual('testuserrepo');
     expect(existingUser.email).toEqual('testuserrepo@gmail.com');
-    expect(existingUser.pnr).toEqual('111111111111');
+    expect(existingUser.pnr).toEqual('111111111122');
     expect(existingUser.password).toEqual('testuserrepo');
     expect(existingUser.username).toEqual('testuserrepo');
     expect(existingUser.role).toEqual('applicant');
@@ -126,7 +126,7 @@ describe('tests for findUserById', () => {
     expect(existingUser.firstname).toBe('testuserrepo');
     expect(existingUser.lastname).toBe('testuserrepo');
     expect(existingUser.email).toBe('testuserrepo@gmail.com');
-    expect(existingUser.pnr).toBe('111111111111');
+    expect(existingUser.pnr).toBe('111111111122');
     expect(existingUser.username).toBe('testuserrepo');
     expect(existingUser.role).toBe('applicant');
   });

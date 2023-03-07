@@ -10,7 +10,7 @@ describe('tests for getUser', () => {
       firstname: 'test',
       lastname: 'test',
       email: 'testt@gmail.com',
-      pnr: '123377774444',
+      pnr: '111111111114',
       username: 'testusername',
       role: 'applicant',
     };
