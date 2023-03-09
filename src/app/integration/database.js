@@ -25,8 +25,10 @@ Sequelize.useCLS(namespace);
  */
 let sequelize;
 
-// TODO: Instantiate Sequelize object with db configuration
-// temp fix to get production up
+/**
+ * Instantiate Sequelize object with db configuration
+ */
+// TODO: temp fix to get production up
 if (process.env.NODE_ENV === 'production') {
   sequelize = new Sequelize(process.env.DATABSE_URL, {
     dialect: 'postgres',
@@ -58,7 +60,6 @@ const Competence = defineCompetenceModel(sequelize, DataTypes);
 /**
  * Defines the associations between the models.
  */
-// TODO: enforce that applications can only associate with a user model with role applicant
 User.hasMany(Application, { foreignKey: 'applicantId' });
 Application.belongsTo(User, { as: 'applicant' });
 
@@ -79,55 +80,73 @@ const db = {
     Availability: Availability,
     Competence: Competence,
   },
-};
-
-/**
- * Starts the connection with assigned configuration.
- */
-(async () => {
-  try {
-    if (process.env.NODE_ENV === 'acctest') {
-      await sequelize.sync({ force: true });
-      await sequelize.transaction(async () => {
-        await User.create({
-          firstname: 'test',
-          lastname: 'lastname',
-          email: 'email@email.com',
-          pnr: '123456789019',
-          username: 'testuser',
-          password: await generateHash('password123'),
-          role: 'applicant',
+  /**
+   * Starts the connection with assigned configuration.
+   */
+  async init() {
+    try {
+      if (process.env.NODE_ENV === 'acctest') {
+        await sequelize.sync({ force: true });
+        await sequelize.transaction(async () => {
+          await User.create({
+            firstname: 'test',
+            lastname: 'lastname',
+            email: 'email@email.com',
+            pnr: '111111111125',
+            username: 'testuser',
+            password: await generateHash('password123'),
+            role: 'applicant',
+          });
+          await User.create({
+            firstname: 'test',
+            lastname: 'lastname2',
+            email: 'email2@email.com',
+            pnr: '111111111126',
+            username: 'testuser2',
+            password: await generateHash('password1234'),
+            role: 'applicant',
+          });
+          await User.create({
+            firstname: 'test',
+            lastname: 'lastname',
+            email: 'adminemail@email.com',
+            pnr: '111111111127',
+            username: 'admin',
+            password: await generateHash('admin'),
+            role: 'recruiter',
+          });
+          await Application.create({ applicantId: 1 });
+          await Availability.create({
+            from_date: '2024-05-01 00:00:00',
+            to_date: '2024-06-01 00:00:00',
+            applicationId: 1,
+          });
+          await Competence.create({
+            name: 'ticket sales',
+            years_of_experience: 2,
+            applicationId: 1,
+          });
+          await Application.create({ applicantId: 2 });
+          await Availability.create({
+            from_date: '2024-05-01 00:00:00',
+            to_date: '2024-06-01 00:00:00',
+            applicationId: 2,
+          });
+          await Competence.create({
+            name: 'ticket sales',
+            years_of_experience: 2,
+            applicationId: 2,
+          });
         });
-        await User.create({
-          firstname: 'test',
-          lastname: 'lastname',
-          email: 'adminemail@email.com',
-          pnr: '123456789015',
-          username: 'admin',
-          password: await generateHash('admin'),
-          role: 'recruiter',
-        });
-        await Application.create({ applicantId: 1 });
-        //Date is invalid. Insert an "Availability" in the database manually.
-        await Availability.create({
-          from_date: '2022-05-01 00:00:00',
-          to_date: '2022-06-01 00:00:00',
-          applicationId: 1,
-        });
-        await Competence.create({
-          name: 'ticket sales',
-          years_of_experience: 2,
-          applicationId: 1,
-        });
-      });
-    } else {
-      await sequelize.sync();
+      } else {
+        await sequelize.sync();
+      }
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
     }
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-})();
+  },
+};
 
 module.exports = db;

@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser');
 const { authorizeRequest } = require('./middleware/authorization');
 const { corsOptions } = require('./config/cors-config');
 require('dotenv').config();
+const db = require('./integration/database');
+db.init();
 
 const app = express();
 app.use(express.json());
@@ -30,6 +32,11 @@ app.use(
   '/applications',
   authorizeRequest(['recruiter']),
   require('./routes/applicationRoute'),
+);
+app.use(
+  '/users',
+  authorizeRequest(['recruiter']),
+  require('./routes/userRoute'),
 );
 
 module.exports = app;

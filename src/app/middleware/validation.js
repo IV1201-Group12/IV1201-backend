@@ -6,7 +6,6 @@
 const userValidators = require('../validators/userValidators');
 const applicationValidators = require('../validators/applicationValidators');
 
-// TODO: Se till att skicka samma strings som i modellagrets felmeddelanden så borde frontend funka
 module.exports = {
   /**
    * Validates the user defined data sent to the register endpoint.
@@ -65,8 +64,8 @@ module.exports = {
     try {
       if (!applicationValidators.isValidStatus(req.body.status))
         throw new Error('Status is not valid');
-      if (!applicationValidators.isValidVersion(req.body.status))
-        throw new Error('Status is not valid');
+      if (!applicationValidators.isValidVersion(req.body.version))
+        throw new Error('Version is not valid');
       return next();
     } catch (err) {
       res.status(400).send(err.message);

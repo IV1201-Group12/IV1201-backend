@@ -1,11 +1,15 @@
-/**
- * This module exports validator functions for the availability model.
- */
 module.exports = {
-  isValidFromDate(value) {
-    return !(Date.parse(value) - Date.parse(new Date()) > 0);
-  },
-  isValidToDate(value) {
-    return !(Date.parse(value) - Date.parse(new Date()) > 0);
+  isValidDate(value) {
+    if (new Date(value).toString() === 'Invalid Date') return false;
+    // const nonDateParseableValue = (input) => {
+    //   return new Date(input).toString() !== 'Invalid Date';
+    // };
+    // if (!nonDateParseableValue(value)) return false;
+    if (
+      new Date(value).setHours(0, 0, 0, 0) <= new Date().setHours(0, 0, 0, 0)
+    ) {
+      return false;
+    }
+    return true;
   },
 };

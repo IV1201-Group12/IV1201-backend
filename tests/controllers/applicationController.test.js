@@ -2,17 +2,12 @@ const applicationController = require('../../src/app/controllers/applicationCont
 const applicationRepository = require('../../src/app/repositories/applicationRepository');
 
 const dbConfig = require('../../src/app/config/db-config');
-
 const pg_promise = require('pg-promise')();
-
-//Remove this test when the other tests in the file work
-test('A test that passes', async () => {
-  expect(true).toBe(true);
-});
-/*
+let database;
 
 beforeAll(async () => {
   database = await connectToDatabase();
+  await require('../../src/app/integration/database').init();
 });
 afterAll(async () => {
   return database.$pool.end();
@@ -20,21 +15,19 @@ afterAll(async () => {
 beforeEach(async () => {
   const status = "'accepted'";
   await database.none(
-    "insert into users values (9999, 'test', 'test', 'testtt@gmail.com', '098765432112', 'testusername', 'testpassword', 'applicant')",
+    "insert into users values (9001, 'testappcont', 'testappcont', 'testappcont@gmail.com', '111111111111', 'testappcont', 'testappcont', 'applicant')",
   );
   await database.none(
     'insert into applications (status, "applicantId") values (' +
       status +
-      ', 9999)',
+      ', 9001)',
   );
 });
 
 afterEach(async () => {
-  await database.none('DELETE FROM applications WHERE "applicantId"=9999');
-  await database.none("DELETE from users WHERE id='9999'");
+  await database.none('DELETE FROM applications WHERE "applicantId"=9001');
+  await database.none("DELETE from users WHERE id='9001'");
 });
-
-let database;
 
 const connectToDatabase = async () => {
   return pg_promise({
@@ -44,8 +37,6 @@ const connectToDatabase = async () => {
     password: dbConfig.PASSWORD,
   });
 };
-
-
 
 describe('tests for getAllApplications', () => {
   test('Applications are retrieved successfully', async () => {
@@ -196,4 +187,3 @@ describe('tests for changeStatusOfApplication', () => {
     expect(mockRes.send).toHaveBeenCalledWith(mockError);
   });
 });
-*/

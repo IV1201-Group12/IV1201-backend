@@ -7,6 +7,7 @@ let database;
 
 beforeAll(async () => {
   database = await connectToDatabase();
+  await require('../../src/app/integration/database').init();
   const status = "'accepted'";
   await database.none(
     "insert into users values (9999, 'test', 'test', 'testtt@gmail.com', '098765432112', 'testusername', 'testpassword', 'applicant')",
@@ -45,6 +46,10 @@ describe('tests for findApplicationById', () => {
     const application = await applicationRepository.findApplicationById(9998);
     expect(application.status).toBe('accepted');
     expect(application.applicant.email).toBe('testtt@gmail.com');
+  });
+  it('should return null if an application with the given id does not exist', async () => {
+    const application = await applicationRepository.findApplicationById(99999);
+    expect(application).toBe(null);
   });
 });
 

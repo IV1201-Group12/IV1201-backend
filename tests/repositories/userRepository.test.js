@@ -7,9 +7,14 @@ let database;
 
 beforeAll(async () => {
   database = await connectToDatabase();
+  await require('../../src/app/integration/database').init();
+  await database.none(
+    "insert into users values (9005, 'testuserrepo', 'testuserrepo', 'testuserrepo@gmail.com', '111111111122', 'testuserrepo', 'testuserrepo', 'applicant')",
+  );
 });
 afterAll(async () => {
-  await database.none("DELETE FROM users WHERE firstname='test'");
+  await database.none("DELETE FROM users WHERE id='9005'");
+  await database.none("DELETE FROM users WHERE firstname='testregister'");
   return database.$pool.end();
 });
 
@@ -23,12 +28,12 @@ const connectToDatabase = async () => {
 };
 
 const applicantCorrect = {
-  firstname: 'test',
-  lastname: 'test',
-  email: 'test@gmail.com',
-  pnr: '123456789012',
-  username: 'test',
-  password: '12345test',
+  firstname: 'testregister',
+  lastname: 'testregister',
+  email: 'testregister@gmail.com',
+  pnr: '111111111123',
+  username: 'testregister',
+  password: 'testregister',
   role: 'applicant',
 };
 
@@ -56,7 +61,7 @@ describe('tests for register', () => {
     firstname: 'test',
     lastname: 'test',
     email: 'testgmaicom',
-    pnr: '123456789012',
+    pnr: '111111111124',
     username: 'test',
     password: '12345test',
     role: 'applicant',
@@ -64,7 +69,7 @@ describe('tests for register', () => {
   test('One new account is created successfully', async () => {
     await userRepository.createUser(applicantCorrect);
     expect(async () => {
-      await database.one("SELECT * FROM users WHERE firstname='test'");
+      await database.one("SELECT * FROM users WHERE firstname='testregister'");
     }).not.toThrow();
   });
 
@@ -99,9 +104,30 @@ describe('tests for getExistingUser', () => {
     expect(existingUser).toBeNull();
   });
 
-  /*  it('should return the user if it exists', async () => {
-    const existingUser = await userRepository.getExistingUser('test');
-    expect(existingUser).toEqual(applicantCorrect);
+  it('should return the user if it exists', async () => {
+    const existingUser = await userRepository.getExistingUser('testuserrepo');
+    expect(existingUser.firstname).toEqual('testuserrepo');
+    expect(existingUser.lastname).toEqual('testuserrepo');
+    expect(existingUser.email).toEqual('testuserrepo@gmail.com');
+    expect(existingUser.pnr).toEqual('111111111122');
+    expect(existingUser.password).toEqual('testuserrepo');
+    expect(existingUser.username).toEqual('testuserrepo');
+    expect(existingUser.role).toEqual('applicant');
   });
-  */
+});
+describe('tests for findUserById', () => {
+  it('should return null if a user with the given id does not exist', async () => {
+    const user = await userRepository.findUserById(99999);
+    expect(user).toBeNull();
+  });
+
+  it('should return the user if a user with the given id exists', async () => {
+    const existingUser = await userRepository.findUserById(9005);
+    expect(existingUser.firstname).toBe('testuserrepo');
+    expect(existingUser.lastname).toBe('testuserrepo');
+    expect(existingUser.email).toBe('testuserrepo@gmail.com');
+    expect(existingUser.pnr).toBe('111111111122');
+    expect(existingUser.username).toBe('testuserrepo');
+    expect(existingUser.role).toBe('applicant');
+  });
 });

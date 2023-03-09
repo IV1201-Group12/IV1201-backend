@@ -3,10 +3,7 @@
  */
 
 const { isValid } = require('../utils/validation');
-const {
-  isValidFromDate,
-  isValidToDate,
-} = require('../validators/availabilityValidators');
+const { isValidDate } = require('../validators/availabilityValidators');
 
 module.exports = (sequelize, DataTypes) => {
   const Availability = sequelize.define(
@@ -17,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           validate(value) {
-            isValid(value, isValidFromDate, 'From date is not valid');
+            isValid(value, isValidDate, 'From date is not valid');
           },
         },
       },
@@ -26,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           validate(value) {
-            isValid(value, isValidToDate, 'To date is not valid');
+            isValid(value, isValidDate, 'To date is not valid');
           },
         },
       },
